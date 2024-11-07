@@ -11,11 +11,11 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-        <nav className="shadow-md bg-blue-500 w-full z-30 fixed">
-    <div className="text-white max-w-[1400px] mx-auto flex items-center justify-between py-4">
+    <nav className="w-full bg-gray-100 z-50 fixed">
+      <div className="text-black max-w-[1400px] mx-auto flex items-center justify-between py-4 font-medium">
         {/* Logo */}
         <div className="font-semibold">
-          <NavLink to="/" className="hover:text-gray-200">
+          <NavLink to="/">
             <p className="flex items-center gap-4">
               <FaShopify className="text-4xl" />
               <span className="text-2xl">ShopHub</span>
@@ -34,7 +34,7 @@ const Navbar = () => {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+              xmlns="http://www.w3.org/3000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -51,7 +51,7 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+              isActive ? "text-green-500 font-bold" : "hover:text-green-400"
             }
           >
             Home
@@ -59,7 +59,7 @@ const Navbar = () => {
           <NavLink
             to="/shop"
             className={({ isActive }) =>
-              isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+              isActive ? "text-green-500 font-bold" : "hover:text-green-400"
             }
           >
             Shop
@@ -67,24 +67,24 @@ const Navbar = () => {
           <NavLink
             to="/dashboard"
             className={({ isActive }) =>
-              isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+              isActive ? "text-green-500 font-bold" : "hover:text-green-400"
             }
           >
             Dashboard
           </NavLink>
           <NavLink
-            to="/contact"
+            to="/contactus"
             className={({ isActive }) =>
-              isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+              isActive ? "text-green-500 font-bold" : "hover:text-green-400"
             }
           >
             Contact Us
           </NavLink>
-          <p className="bg-amber-500 font-bold rounded-3xl px-2">
+          <p className="bg-green-500 hover:bg-green-400 font-bold rounded-3xl px-2">
             <NavLink
               to="/cart"
               className={({ isActive }) =>
-                isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                isActive ? "" : ""
               }
             >
               <p className="flex items-center gap-2">
@@ -96,7 +96,7 @@ const Navbar = () => {
           <NavLink
             to="/profile"
             className={({ isActive }) =>
-              isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+              isActive ? "text-green-500 font-bold" : "hover:text-green-400"
             }
           >
             <CgProfile className="text-3xl" />
@@ -110,7 +110,7 @@ const Navbar = () => {
               to="/"
               onClick={toggleMenu}
               className={({ isActive }) =>
-                isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
               }
             >
               Home
@@ -119,7 +119,7 @@ const Navbar = () => {
               to="/shop"
               onClick={toggleMenu}
               className={({ isActive }) =>
-                isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
               }
             >
               Shop
@@ -128,25 +128,25 @@ const Navbar = () => {
               to="/dashboard"
               onClick={toggleMenu}
               className={({ isActive }) =>
-                isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
               }
             >
               Dashboard
             </NavLink>
             <NavLink
-              to="/contact"
+              to="/contactus"
               onClick={toggleMenu}
               className={({ isActive }) =>
-                isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
               }
             >
               Contact Us
             </NavLink>
-            <p className="bg-amber-400 font-bold rounded-3xl px-2">
+            <p className="bg-green-400 font-bold rounded-3xl px-2">
               <NavLink
                 to="/cart"
                 className={({ isActive }) =>
-                  isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                  isActive ? "text-green-400 font-bold" : "hover:"
                 }
               >
                 <p className="flex items-center gap-1">
@@ -159,10 +159,10 @@ const Navbar = () => {
               to="/profile"
               onClick={toggleMenu}
               className={({ isActive }) =>
-                isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
               }
             >
-             <CgProfile />
+              <CgProfile />
             </NavLink>
           </div>
         )}
