@@ -11,8 +11,8 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className=" text-white shadow-md bg-blue-500">
-      <div className=" max-w-[1400px] mx-auto flex items-center justify-between py-4 text-white">
+        <nav className="shadow-md bg-blue-500 w-full z-30 fixed">
+    <div className="text-white max-w-[1400px] mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <div className="font-semibold">
           <NavLink to="/" className="hover:text-gray-200">
@@ -87,9 +87,9 @@ const Navbar = () => {
                 isActive ? "text-amber-400 font-bold" : "hover:text-gray-200"
               }
             >
-              <p className="flex items-center gap-1">
-                <FaCartPlus className="text-2xl" />
-                <span>0</span>
+              <p className="flex items-center gap-2">
+                <FaCartPlus className="text-2xl text-black" />
+                <span className="">0</span>
               </p>
             </NavLink>
           </p>
