@@ -3,315 +3,315 @@
     "title": "Classic White Shirt",
     "category": "shirt",
     "description": "A versatile, classic white shirt made from soft, breathable cotton.",
-    "image": "https://example.com/images/classic_white_shirt.jpg",
+    "image": "https://i.ibb.co.com/t4ppKJn/images-removebg-preview.png",
     "price": 1200
   },
   {
     "title": "Casual Denim Pants",
     "category": "pants",
     "description": "Stylish and durable denim pants. Comfortable fit for everyday wear.",
-    "image": "https://example.com/images/casual_denim_pants.jpg",
+    "image": "https://i.ibb.co.com/s32RKxx/images-removebg-preview-1.png",
     "price": 1500
   },
   {
     "title": "Leather Loafers",
     "category": "shoes",
     "description": "High-quality leather loafers suitable for any formal occasion.",
-    "image": "https://example.com/images/leather_loafers.jpg",
+    "image": "https://i.ibb.co.com/Kykf5Sk/download-removebg-preview.png",
     "price": 2500
   },
   {
     "title": "Silk Saree",
     "category": "saree",
     "description": "Elegant silk saree with traditional design, perfect for weddings and ceremonies.",
-    "image": "https://example.com/images/silk_saree.jpg",
+    "image": "https://i.ibb.co.com/Rj5NgxL/2c469-512.webp",
     "price": 6000
   },
   {
-    "title": "Floral Girls' Dress",
-    "category": "girls dresses",
+    "title": "Palazzo Suit",
+    "category": "three pis",
     "description": "Beautiful floral dress for girls, ideal for birthdays and special events.",
-    "image": "https://example.com/images/floral_girls_dress.jpg",
+    "image": "https://i.ibb.co.com/ypcyqVT/file-00612de6-b9ca-454a-b085-03d27d0d928b-248x.jpg",
     "price": 1800
   },
   {
     "title": "Cotton T-Shirt",
-    "category": "shirt",
+    "category": "t-shirt",
     "description": "Comfortable and casual cotton t-shirt available in multiple colors.",
-    "image": "https://example.com/images/cotton_tshirt.jpg",
+    "image": "https://i.ibb.co.com/gyQqBGr/download-removebg-preview-1.png",
     "price": 700
   },
   {
     "title": "Formal Trousers",
     "category": "pants",
     "description": "Classic formal trousers with a perfect slim-fit cut. Ideal for office wear.",
-    "image": "https://example.com/images/formal_trousers.jpg",
+    "image": "https://i.ibb.co.com/HNKS261/FP-232-removebg-preview.png",
     "price": 1600
   },
   {
     "title": "Running Sneakers",
     "category": "shoes",
     "description": "Lightweight and comfortable sneakers designed for running and active wear.",
-    "image": "https://example.com/images/running_sneakers.jpg",
+    "image": "https://i.ibb.co.com/9GKqNMY/download-removebg-preview-2.png",
     "price": 2000
   },
   {
     "title": "Cotton Saree",
     "category": "saree",
     "description": "Simple and elegant cotton saree, perfect for everyday wear.",
-    "image": "https://example.com/images/cotton_saree.jpg",
+    "image": "https://i.ibb.co.com/w63k7y3/875b30de5b94162c2b15ca8c2111a935-removebg-preview.png",
     "price": 1200
   },
   {
-    "title": "Princess Girls' Gown",
-    "category": "girls dresses",
+    "title": "Indian Kurti set",
+    "category": "three pis",
     "description": "Elegant princess gown with layers of tulle, ideal for parties.",
-    "image": "https://example.com/images/princess_gown.jpg",
+    "image": "https://i.ibb.co.com/Lzw5gC4/231-92b35b49-ec73-453b-96cd-ef33574956d2-1520x.webp",
     "price": 2500
   },
   {
     "title": "Striped Polo Shirt",
-    "category": "shirt",
+    "category": "t-shirt",
     "description": "Stylish polo shirt with bold stripes, suitable for casual outings.",
-    "image": "https://example.com/images/striped_polo_shirt.jpg",
+    "image": "https://i.ibb.co.com/bz27Tms/download-removebg-preview-3.png",
     "price": 900
   },
   {
     "title": "Slim Fit Jeans",
     "category": "pants",
     "description": "Trendy slim fit jeans with stretch for added comfort.",
-    "image": "https://example.com/images/slim_fit_jeans.jpg",
+    "image": "https://i.ibb.co.com/ss5M74d/s-l1200-removebg-preview.png",
     "price": 1800
   },
   {
     "title": "Casual Slip-On Shoes",
     "category": "shoes",
     "description": "Easy slip-on shoes with a comfortable sole for all-day wear.",
-    "image": "https://example.com/images/slip_on_shoes.jpg",
+    "image": "https://i.ibb.co.com/NY2SFw0/download.jpg",
     "price": 1500
   },
   {
     "title": "Traditional Banarasi Saree",
     "category": "saree",
     "description": "Stunning Banarasi saree with intricate gold motifs, perfect for festive occasions.",
-    "image": "https://example.com/images/banarasi_saree.jpg",
+    "image": "https://i.ibb.co.com/C7jbrNB/baleno-banarasi-silk-print-saree-2058.jpg",
     "price": 8000
   },
   {
     "title": "Summer Sundress for Girls",
-    "category": "girls dresses",
+    "category": "three pis",
     "description": "Light and breezy sundress for girls, perfect for warm weather.",
-    "image": "https://example.com/images/summer_sundress.jpg",
+    "image": "https://i.ibb.co.com/gVLNyz5/classic-georgette-embroidered-anarkali-suit-slswe301027ra-u.webp",
     "price": 1300
   },
   {
     "title": "Plaid Shirt",
     "category": "shirt",
     "description": "Casual plaid shirt, perfect for a relaxed weekend look.",
-    "image": "https://example.com/images/plaid_shirt.jpg",
+    "image": "https://i.ibb.co.com/wK9F3Jy/images-removebg-preview-2.png",
     "price": 1000
   },
   {
     "title": "Cargo Pants",
     "category": "pants",
     "description": "Functional cargo pants with multiple pockets, great for outdoor activities.",
-    "image": "https://example.com/images/cargo_pants.jpg",
+    "image": "https://i.ibb.co.com/yVx3xv6/x-Pyv-E7-RMc5z-N3o-Ugo1x-KXaf4g-Bwyc-Kw-Iab-E9v-NUC.jpg",
     "price": 1400
   },
   {
     "title": "Formal Leather Shoes",
     "category": "shoes",
     "description": "Elegant formal shoes made from genuine leather.",
-    "image": "https://example.com/images/formal_leather_shoes.jpg",
+    "image": "https://i.ibb.co.com/kH1pwBm/81-XMMRDX3-WL-AC-UY1000.jpg",
     "price": 2700
   },
   {
     "title": "Georgette Party Saree",
     "category": "saree",
     "description": "Stylish georgette saree with embellishments, ideal for parties.",
-    "image": "https://example.com/images/party_saree.jpg",
+    "image": "https://i.ibb.co.com/2dsQHLd/embroidered-georgette-saree-in-shade-purple-and-beige-v1-sfva3582.webp",
     "price": 4000
   },
   {
-    "title": "Polka Dot Girls' Dress",
-    "category": "girls dresses",
+    "title": "Palazzo Suit Set",
+    "category": "three pis",
     "description": "Adorable polka dot dress with a bow, perfect for girls' parties.",
-    "image": "https://example.com/images/polka_dot_dress.jpg",
+    "image": "https://i.ibb.co.com/r4gx7DB/skdafreen8845aw23tercta-1-1.webp",
     "price": 1600
   },
   {
     "title": "Solid Color Hoodie",
     "category": "shirt",
     "description": "Warm and cozy hoodie in solid colors, ideal for chilly days.",
-    "image": "https://example.com/images/solid_color_hoodie.jpg",
+    "image": "https://i.ibb.co.com/nLCbCMc/611-Ar-DNi-q-L-AC-UF1000-1000-QL80-removebg-preview.png",
     "price": 1500
   },
   {
     "title": "High-Waist Jeans",
     "category": "pants",
     "description": "Comfortable high-waist jeans for a flattering fit.",
-    "image": "https://example.com/images/high_waist_jeans.jpg",
+    "image": "https://i.ibb.co.com/ngmp80X/images-removebg-preview-3.png",
     "price": 1700
   },
   {
     "title": "Ankle Boots",
     "category": "shoes",
     "description": "Stylish ankle boots with durable soles, perfect for fall and winter.",
-    "image": "https://example.com/images/ankle_boots.jpg",
+    "image": "https://i.ibb.co.com/MncC9kZ/images.jpg",
     "price": 3000
   },
   {
     "title": "Printed Chiffon Saree",
     "category": "saree",
     "description": "Lightweight chiffon saree with modern prints for a contemporary look.",
-    "image": "https://example.com/images/chiffon_saree.jpg",
+    "image": "https://i.ibb.co.com/TgrfTy8/digital-printed-chiffon-saree-in-multicolor-v1-ssf21781.webp",
     "price": 2500
   },
   {
-    "title": "Ruffled Girls' Dress",
-    "category": "girls dresses",
+    "title": "Sharara Set",
+    "category": "three pis",
     "description": "Cute dress with ruffled sleeves and hem, perfect for casual outings.",
-    "image": "https://example.com/images/ruffled_girls_dress.jpg",
+    "image": "https://i.ibb.co.com/DCzbkp4/131-1800x1800-e6f40aa2-d30b-49f4-8ec6-0720b76c2d87-800x.webp",
     "price": 1500
   },
   {
     "title": "Graphic Tee",
-    "category": "shirt",
+    "category": "t-shirt",
     "description": "Trendy graphic tee with unique designs, available in multiple prints.",
-    "image": "https://example.com/images/graphic_tee.jpg",
+    "image": "https://i.ibb.co.com/crPTsb0/images-removebg-preview-4.png",
     "price": 850
   },
   {
     "title": "Jogger Pants",
     "category": "pants",
     "description": "Comfortable jogger pants for a sporty, relaxed look.",
-    "image": "https://example.com/images/jogger_pants.jpg",
+    "image": "https://i.ibb.co.com/ZVb59kn/images-removebg-preview-5.png",
     "price": 1300
   },
   {
     "title": "Sandals",
     "category": "shoes",
     "description": "Light and airy sandals, perfect for summer days.",
-    "image": "https://example.com/images/sandals.jpg",
+    "image": "https://i.ibb.co.com/zr29bt7/images-removebg-preview-6.png",
     "price": 1100
   },
   {
     "title": "Handloom Cotton Saree",
     "category": "saree",
     "description": "Beautiful handloom cotton saree, a traditional staple.",
-    "image": "https://example.com/images/handloom_cotton_saree.jpg",
+    "image": "https://i.ibb.co.com/p4L667K/cotton-silk-saree-with-strip-pallu-full.jpg",
     "price": 3500
   },
   {
-    "title": "Sequin Girls' Dress",
-    "category": "girls dresses",
+    "title": "Cut salwar suit",
+    "category": "three pis",
     "description": "Sparkly sequin dress, perfect for evening parties.",
-    "image": "https://example.com/images/sequin_girls_dress.jpg",
+    "image": "https://i.ibb.co.com/54mNb8Q/images.jpg",
     "price": 2200
   },
   {
     "title": "Formal Suit Jacket",
     "category": "shirt",
     "description": "Tailored suit jacket for a professional look, available in classic colors.",
-    "image": "https://example.com/images/suit_jacket.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 4500
   },
   {
     "title": "Flared Pants",
     "category": "pants",
     "description": "Fashion-forward flared pants, perfect for a retro look.",
-    "image": "https://example.com/images/flared_pants.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 2000
   },
   {
     "title": "Ballet Flats",
     "category": "shoes",
     "description": "Comfortable ballet flats for a chic yet casual look.",
-    "image": "https://example.com/images/ballet_flats.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 1300
   },
   {
     "title": "Kanjivaram Saree",
     "category": "saree",
     "description": "Opulent Kanjivaram saree, perfect for weddings and grand occasions.",
-    "image": "https://example.com/images/kanjivaram_saree.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 12000
   },
   {
     "title": "Plaid Girls' Dress",
-    "category": "girls dresses",
+    "category": "three pis",
     "description": "Cute plaid dress for girls, ideal for back-to-school.",
-    "image": "https://example.com/images/plaid_girls_dress.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 1400
   },
   {
     "title": "V-Neck T-Shirt",
-    "category": "shirt",
+    "category": "t-shirt",
     "description": "Soft and stylish V-neck t-shirt, available in various colors.",
-    "image": "https://example.com/images/vneck_tshirt.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 800
   },
   {
     "title": "Bermuda Shorts",
     "category": "pants",
     "description": "Comfortable Bermuda shorts for relaxed summer days.",
-    "image": "https://example.com/images/bermuda_shorts.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 900
   },
   {
     "title": "Slip-On Sneakers",
     "category": "shoes",
     "description": "Casual slip-on sneakers, perfect for everyday wear.",
-    "image": "https://example.com/images/slip_on_sneakers.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 1200
   },
   {
     "title": "Linen Saree",
     "category": "saree",
     "description": "Soft linen saree, ideal for casual and semi-formal occasions.",
-    "image": "https://example.com/images/linen_saree.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 2800
   },
   {
     "title": "Floral Girls' Party Dress",
-    "category": "girls dresses",
+    "category": "three pis",
     "description": "Delicate floral dress for girls, perfect for family gatherings.",
-    "image": "https://example.com/images/floral_party_dress.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 1800
   },
   {
     "title": "Henley Shirt",
-    "category": "shirt",
+    "category": "t-shirt",
     "description": "Stylish Henley shirt, perfect for a casual yet polished look.",
-    "image": "https://example.com/images/henley_shirt.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 950
   },
   {
     "title": "Chinos",
     "category": "pants",
     "description": "Classic chinos, perfect for both casual and semi-formal occasions.",
-    "image": "https://example.com/images/chinos.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 1600
   },
   {
     "title": "Chelsea Boots",
     "category": "shoes",
     "description": "Classic Chelsea boots with a sleek design, perfect for all seasons.",
-    "image": "https://example.com/images/chelsea_boots.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 2200
   },
   {
     "title": "Zari Work Saree",
     "category": "saree",
     "description": "Traditional saree with exquisite zari work, ideal for festive occasions.",
-    "image": "https://example.com/images/zari_work_saree.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 5500
   },
   {
     "title": "Velvet Girls' Dress",
-    "category": "girls dresses",
+    "category": "three pis",
     "description": "Luxurious velvet dress for girls, ideal for winter parties.",
-    "image": "https://example.com/images/velvet_girls_dress.jpg",
+    "image": "https://i.ibb.co.com/Jx2FWcL/f06de9ae6f718e8576f21aa7b2754f90-removebg-preview.png",
     "price": 2400
   }
 ]

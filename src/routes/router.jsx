@@ -4,6 +4,7 @@ import Home from "../homeroutes/Home";
 import Shop from "../shoproutes/Shop";
 import Dashboard from "../dashboard/Dashboard";
 import Contactus from "../contactus/Contactus";
+import Cart from "../UserRoutes/Cart";
 
 const router = createBrowserRouter([
     {
@@ -19,15 +20,21 @@ const router = createBrowserRouter([
           element: <Shop></Shop>
         },
         {
-          path: '/dashboard',
-          element: <Dashboard></Dashboard>
-        },
-        {
           path: '/contactus',
           element: <Contactus></Contactus>
         },
       ]
     },
+    {
+      path: '/dashboard',
+      element: <Dashboard></Dashboard>,
+      children: [
+        {
+          path: '/dashboard/cart',
+          element: <Cart></Cart>
+        },
+      ]
+    }
   ]);
 
   export default router;
