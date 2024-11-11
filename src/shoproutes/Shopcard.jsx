@@ -1,22 +1,35 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAddCartMutation } from "../redux/baseapi/baseApi";
 
 const Shopcard = ({ item }) => {
   const { title, description, price, category, image } = item;
   const navigate = useNavigate()
+  const [addCart, {data, isLoading: loading}] = useAddCartMutation()
   const { email, isLoading } = useSelector((state) => state.userSlice.user);
   console.log(email, isLoading);
 
-  const addToCart = () => {
-    if(email && isLoading){
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: `added to the cart`,
-        showConfirmButton: false,
-        timer: 1500
-      });
+  if(loading){
+    return <p>Loading.....</p>
+  }
+
+  const addToCart =async () => {
+    if(email && !isLoading){
+      const cartInfo = {
+        email: email,
+        title, image, description, price, category,
+      }
+      const res = await addCart(cartInfo)
+      if(res?.data?.insertedId){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `added to the cart`, 
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
     }
     else{
       Swal.fire({

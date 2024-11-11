@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { createUser} from "../redux/features/userSlice";
 import { useEffect } from "react";
+import { useAddUserMutation } from "../redux/baseapi/baseApi";
 
 const Signup = () => {
   const navigate = useNavigate()
   const {email, isLoading} = useSelector(state => state.userSlice.user)
+  const [addUser, {data }] = useAddUserMutation()
+  console.log(data);
   const dispatch = useDispatch();
 
   const {
@@ -16,22 +19,28 @@ const Signup = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = ({ email, password, name }) => {
+  const onSubmit = async({ email, password, name }) => {
     console.log(email, password, name);
-    dispatch(
+    await dispatch(
       createUser({
         email,
         password,
         name,
       })
     );
+    const userInfo = {
+      name: name,
+      email: email,
+    }
+    console.log(userInfo);
+    addUser(userInfo)
   };
 
-  useEffect(() => {
-    if (!isLoading && email) {
-      navigate("/");
-    }
-  }, [isLoading, email, navigate]);
+  // useEffect(() => {
+  //   if (!isLoading && email) {
+  //     navigate("/");
+  //   }
+  // }, [isLoading, email, navigate]);
 
   return (
     <div>

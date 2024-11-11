@@ -36,7 +36,6 @@ export const createSignin = createAsyncThunk(
   "userSlice/createSignin",
   async ({ email, password }) => {
     const data = await signInWithEmailAndPassword(auth, email, password);
-    await new Promise(resolve => setTimeout(resolve, 500)); // Wait for sync
     return {
       email: data.user.email,
       name: data.user.displayName || "",
@@ -56,7 +55,6 @@ const userSlice = createSlice({
     },
     setLoading: (state, { payload }) => {
       state.user.isLoading = payload;
-      console.log(payload);
     },
     setLogout: (state) => {
       state.user = initialState.user;

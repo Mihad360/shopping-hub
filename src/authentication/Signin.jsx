@@ -19,20 +19,19 @@ const Signin = () => {
   } = useForm();
   const onSubmit = ({email, password}) => {
     console.log(email, password);
-    dispatch(
+   dispatch(
       createSignin({
         email,
         password,
       })
     );
+    
+   
   };
-
-  
-  useEffect(() => {
-    if (!isLoading && email) {
-      navigate("/");
-    }
-  }, [isLoading, email, navigate]);
+  // if (email) {
+  //   navigate("/", { replace: true });
+  // }
+ 
 
   return (
     <div>

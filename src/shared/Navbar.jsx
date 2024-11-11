@@ -7,12 +7,14 @@ import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import auth from "../firebase/firebase.config";
 import { setLogout } from "../redux/features/userSlice";
+import { useGetCartQuery } from "../redux/baseapi/baseApi";
 
 const Navbar = () => {
   // State to handle menu toggle
   const [isOpen, setIsOpen] = useState(false);
   const [isdrop, setIsDrop] = useState(false);
   const dropdownRef = useRef(null);
+  const {data} = useGetCartQuery()
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -108,12 +110,12 @@ const Navbar = () => {
           </NavLink>
           <p className="bg-green-500 hover:bg-green-400 font-bold rounded-3xl px-2">
             <NavLink
-              to="/cart"
+              to="/dashboard/cart"
               className={({ isActive }) => (isActive ? "" : "")}
             >
               <p className="flex items-center gap-2">
                 <FaCartPlus className="text-2xl text-black" />
-                <span className="">0</span>
+                <span className="">{data?.length}</span>
               </p>
             </NavLink>
           </p>

@@ -13,8 +13,9 @@ const Privateroute = ({ children }) => {
   console.log(email, isLoading);
 
   useEffect(() => {
-    // dispatch(setLoading(true));
+    dispatch(setLoading(true));
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
       setTimeout(() => {
         if (currentUser) {
           dispatch(
@@ -25,7 +26,7 @@ const Privateroute = ({ children }) => {
           );
         }
         dispatch(setLoading(false)); // Stop loading after checking auth status
-      }); // Adjust delay as needed
+      },1000); // Adjust delay as needed
     });
   
     return () => unsubscribe();
