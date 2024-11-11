@@ -2,7 +2,7 @@
 
 const Contactus = () => {
     return (
-        <div>
+        <div className="py-32">
             contact us
         </div>
     );

@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { shopSlice } from "./features/shopSlice";
 import shopapi from "./baseapi/baseApi";
+import userSlice from "./features/userSlice"
+import shopSlice from "./features/shopSlice"
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     [shopapi.reducerPath]: shopapi.reducer,
     shopSlice: shopSlice,
+    userSlice: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(shopapi.middleware),
 });
+
+export default store;
