@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const shopapi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
-  tagTypes: ["cart"],
+  tagTypes: ["Cart"],
   endpoints: (builder) => ({
     getShop: builder.query({
       query: () => "/shop",
@@ -21,11 +21,18 @@ const shopapi = createApi({
         method: "POST",
         body: cartInfo,
       }),
-      invalidatesTags: ["cart"],
+      invalidatesTags: ["Cart"],
     }),
     getCart: builder.query({
-      query: () => "/cart",
-      providesTags: ["cart"],
+      query: (email) => `/cart?email=${email}`,
+      providesTags: ["Cart"]
+    }),
+    deleteCart: builder.mutation({
+      query: (id) => ({
+        url: `/cart/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Cart"]
     }),
   }),
 });
@@ -35,6 +42,7 @@ export const {
   useAddUserMutation,
   useAddCartMutation,
   useGetCartQuery,
+  useDeleteCartMutation,
 } = shopapi;
 
 export default shopapi;

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaShopify } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import auth from "../firebase/firebase.config";
 import { setLogout } from "../redux/features/userSlice";
@@ -14,7 +14,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isdrop, setIsDrop] = useState(false);
   const dropdownRef = useRef(null);
-  const {data} = useGetCartQuery()
+  const {email} = useSelector(state => state.userSlice.user)
+  const {data} = useGetCartQuery(email)
   const dispatch = useDispatch();
 
   const handleLogout = () => {

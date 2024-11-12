@@ -2,165 +2,175 @@ import { RiAdminFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
+  const isAdmin = true;
+
   return (
     <div className="max-w-[1400px] mx-auto">
       <div>
-        <div className="flex items-center gap-4">
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Admin Home
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Add Items
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Manage Items
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                All Users
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                User Home
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/cart"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Cart Items
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Payment
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Payment History
-              </span>
-            </NavLink>
-          </p>
-          <p>
-            <NavLink
-              to="/dashboard/adminhome"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
-              }
-            >
-              <span className="flex items-center gap-1 lg:gap-2">
-                <RiAdminFill />
-                Reviews
-              </span>
-            </NavLink>
-          </p>
+        
+        <div className="flex items-center gap-4 justify-center pb-5">
+          {isAdmin ? (
+            <div className="flex items-center gap-4 ">
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Admin Home
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Add Items
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Manage Items
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    All Users
+                  </span>
+                </NavLink>
+              </p>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    User Home
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/cart"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Cart Items
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Payment
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Payment History
+                  </span>
+                </NavLink>
+              </p>
+              <p>
+                <NavLink
+                  to="/dashboard/adminhome"
+                  className={({ isActive, isPending }) =>
+                    isPending
+                      ? "pending"
+                      : isActive
+                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
+                  }
+                >
+                  <span className="flex items-center gap-1 lg:gap-2">
+                    <RiAdminFill />
+                    Reviews
+                  </span>
+                </NavLink>
+              </p>
+            </div>
+          )}
           {/* -------------------------- */}
-          <p>/</p>
+          <h1 className="text-3xl px-4 font-semibold text-black pt-2 pb-3 text-center">Shop Dashboard</h1>
           {/* ------------------- */}
           <p>
             <NavLink
@@ -169,8 +179,8 @@ const Dashboard = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
+                  ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                  : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
               }
             >
               <span className="flex items-center gap-1 lg:gap-2">
@@ -186,8 +196,8 @@ const Dashboard = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
+                  ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                  : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
               }
             >
               <span className="flex items-center gap-1 lg:gap-2">
@@ -203,8 +213,8 @@ const Dashboard = () => {
                 isPending
                   ? "pending"
                   : isActive
-                  ? "text-pink-600 font-bold"
-                  : ""
+                  ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
+                  : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
               }
             >
               <span className="flex items-center gap-1 lg:gap-2">
@@ -215,7 +225,7 @@ const Dashboard = () => {
           </p>
         </div>
         <div>
-            <Outlet></Outlet>
+          <Outlet></Outlet>
         </div>
       </div>
     </div>

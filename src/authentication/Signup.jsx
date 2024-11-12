@@ -2,16 +2,32 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser} from "../redux/features/userSlice";
+import { createUser, setLoading, setUser} from "../redux/features/userSlice";
 import { useEffect } from "react";
 import { useAddUserMutation } from "../redux/baseapi/baseApi";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from "../firebase/firebase.config";
 
 const Signup = () => {
   const navigate = useNavigate()
   const {email, isLoading} = useSelector(state => state.userSlice.user)
   const [addUser, {data }] = useAddUserMutation()
   console.log(data);
+  const googleProvider = new GoogleAuthProvider()
   const dispatch = useDispatch();
+
+  const handleGoogle = async () => {
+    const res = await signInWithPopup(auth, googleProvider)
+    console.log(res.user);
+    if(res?.user){
+      dispatch(setUser({
+        email: res.user.email,
+        name: res.user.displayName
+      }))
+      dispatch(setLoading(false))
+      navigate('/')
+    }
+  }
 
   const {
     register,
@@ -136,7 +152,7 @@ const Signup = () => {
                 </div>
               </form>
               <div className="mx-auto pb-7">
-                <button className="text-lg lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center">
+                <button onClick={handleGoogle} className="text-lg lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center">
                   <FcGoogle />{" "}
                   <p className="text-lg text-black">SignUp with Google</p>
                 </button>
