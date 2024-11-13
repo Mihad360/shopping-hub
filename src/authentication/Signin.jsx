@@ -6,10 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { createSignin, setLoading, setUser } from "../redux/features/userSlice";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase/firebase.config";
+import { useAddUserMutation } from "../redux/baseapi/baseApi";
 
 const Signin = () => {
   const navigate = useNavigate()
   const {email, isLoading} = useSelector(state => state.userSlice.user)
+  const [addUser] = useAddUserMutation()
   const googleProvider = new GoogleAuthProvider()
   const dispatch = useDispatch();
 
@@ -21,6 +23,11 @@ const Signin = () => {
         email: res.user.email,
         name: res.user.displayName
       }))
+      const userInfo = {
+        name: res.user.displayName,
+        email: res.user.email,
+      }
+      addUser(userInfo)
       dispatch(setLoading(false))
       navigate('/')
     }

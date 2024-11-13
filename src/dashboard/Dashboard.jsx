@@ -8,7 +8,7 @@ const Dashboard = () => {
     <div className="max-w-[1400px] mx-auto">
       <div>
         
-        <div className="flex items-center gap-4 justify-center pb-5">
+        <div className="flex items-center gap-4 justify-center pb-3 pt-2 fixed z-30 w-[1400px] mx-auto bg-gray-100">
           {isAdmin ? (
             <div className="flex items-center gap-4 ">
               <p>
@@ -64,7 +64,7 @@ const Dashboard = () => {
               </p>
               <p>
                 <NavLink
-                  to="/dashboard/adminhome"
+                  to="/dashboard/allusers"
                   className={({ isActive, isPending }) =>
                     isPending
                       ? "pending"

@@ -24,6 +24,11 @@ const Signup = () => {
         email: res.user.email,
         name: res.user.displayName
       }))
+      const userInfo = {
+        name: res.user.displayName,
+        email: res.user.email,
+      }
+      addUser(userInfo)
       dispatch(setLoading(false))
       navigate('/')
     }
