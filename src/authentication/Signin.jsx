@@ -9,29 +9,31 @@ import auth from "../firebase/firebase.config";
 import { useAddUserMutation } from "../redux/baseapi/baseApi";
 
 const Signin = () => {
-  const navigate = useNavigate()
-  const {email, isLoading} = useSelector(state => state.userSlice.user)
-  const [addUser] = useAddUserMutation()
-  const googleProvider = new GoogleAuthProvider()
+  const navigate = useNavigate();
+  const { email, isLoading } = useSelector((state) => state.userSlice.user);
+  const [addUser] = useAddUserMutation();
+  const googleProvider = new GoogleAuthProvider();
   const dispatch = useDispatch();
 
   const handleGoogle = async () => {
-    const res = await signInWithPopup(auth, googleProvider)
+    const res = await signInWithPopup(auth, googleProvider);
     console.log(res.user);
-    if(res?.user){
-      dispatch(setUser({
-        email: res.user.email,
-        name: res.user.displayName
-      }))
+    if (res?.user) {
+      await dispatch(
+        setUser({
+          email: res.user.email,
+          name: res.user.displayName,
+        })
+      );
       const userInfo = {
         name: res.user.displayName,
         email: res.user.email,
-      }
-      addUser(userInfo)
-      dispatch(setLoading(false))
-      navigate('/')
+      };
+      await addUser(userInfo);
+      dispatch(setLoading(false));
+      navigate("/");
     }
-  }
+  };
 
   const {
     register,
@@ -39,21 +41,16 @@ const Signin = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = ({email, password}) => {
+  const onSubmit = async ({ email, password }) => {
     console.log(email, password);
-   dispatch(
+    await dispatch(
       createSignin({
         email,
         password,
       })
     );
-    
-   
+    navigate('/')
   };
-  // if (email) {
-  //   navigate("/", { replace: true });
-  // }
- 
 
   return (
     <div>
@@ -114,7 +111,10 @@ const Signin = () => {
                 </div>
               </form>
               <div className="mx-auto pb-7">
-                <button onClick={handleGoogle} className="text-xl lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center">
+                <button
+                  onClick={handleGoogle}
+                  className="text-xl lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center"
+                >
                   <FcGoogle />{" "}
                   <p className="text-lg text-black">Login with Google</p>
                 </button>

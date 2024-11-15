@@ -12,7 +12,6 @@ const Signup = () => {
   const navigate = useNavigate()
   const {email, isLoading} = useSelector(state => state.userSlice.user)
   const [addUser, {data }] = useAddUserMutation()
-  console.log(data);
   const googleProvider = new GoogleAuthProvider()
   const dispatch = useDispatch();
 
@@ -20,7 +19,7 @@ const Signup = () => {
     const res = await signInWithPopup(auth, googleProvider)
     console.log(res.user);
     if(res?.user){
-      dispatch(setUser({
+      await dispatch(setUser({
         email: res.user.email,
         name: res.user.displayName
       }))
@@ -28,7 +27,7 @@ const Signup = () => {
         name: res.user.displayName,
         email: res.user.email,
       }
-      addUser(userInfo)
+      await addUser(userInfo)
       dispatch(setLoading(false))
       navigate('/')
     }
@@ -54,7 +53,10 @@ const Signup = () => {
       email: email,
     }
     console.log(userInfo);
-    addUser(userInfo)
+    const res = await addUser(userInfo)
+    if(res.data.insertedId){
+      navigate('/')
+    }
   };
 
   // useEffect(() => {

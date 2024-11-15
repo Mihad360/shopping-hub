@@ -14,6 +14,9 @@ const initialState = {
     isError: false,
     error: "",
   },
+  token: {
+    token: ''
+  }
 };
 
 export const createUser = createAsyncThunk(
@@ -48,6 +51,9 @@ const userSlice = createSlice({
   name: "userSlice",
   initialState,
   reducers: {
+    setToken: (state, {payload}) => {
+      state.token.token = payload.token
+    },
     setUser: (state, { payload }) => {
       state.user.name = payload.name;
       state.user.email = payload.email;
@@ -96,6 +102,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setLoading, setLogout } = userSlice.actions;
+export const { setUser, setLoading, setLogout,setToken } = userSlice.actions;
 
 export default userSlice.reducer;

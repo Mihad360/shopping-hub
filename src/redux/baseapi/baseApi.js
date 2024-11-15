@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const shopapi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:5000"
+  }),
   tagTypes: ["Cart", "User"],
   endpoints: (builder) => ({
     getShop: builder.query({
@@ -25,25 +27,33 @@ const shopapi = createApi({
     }),
     getCart: builder.query({
       query: (email) => `/cart?email=${email}`,
-      providesTags: ["Cart"]
+      providesTags: ["Cart"],
     }),
     deleteCart: builder.mutation({
       query: (id) => ({
         url: `/cart/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Cart"]
+      invalidatesTags: ["Cart"],
     }),
-    getUsers: builder.query({
-      query: () => '/users',
-      providesTags: ["User"]
-    }),
-    updateAdmin: builder.mutation({
-      query: (id) => ({
-        url: `/users/admin/${id}`,
-        method: "PATCH",
+    // getUsers: builder.query({
+    //   query: () => "/users",
+    //   providesTags: (result) =>
+    //     result ? [{ type: "User", id: "LIST" }] : ["User"],
+    // }),
+    // updateAdmin: builder.mutation({
+    //   query: (id) => ({
+    //     url: `/users/admin/${id}`,
+    //     method: "PATCH",
+    //   }),
+    //   invalidatesTags: [{ type: "User", id: "LIST" }],
+    // }),
+    saveJwt: builder.mutation({
+      query: (userInfo) => ({
+        url: "/jwt",
+        method: "POST",
+        body: userInfo,
       }),
-      invalidatesTags: ["User"]
     }),
   }),
 });
@@ -56,6 +66,7 @@ export const {
   useDeleteCartMutation,
   useGetUsersQuery,
   useUpdateAdminMutation,
+  useSaveJwtMutation,
 } = shopapi;
 
 export default shopapi;

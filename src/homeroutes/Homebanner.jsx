@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
-import { useSelector } from "react-redux";
 
 const Homebanner = ({ slides, autoplayInterval = 4000 }) => {
   const [current, setCurrent] = useState(0);
-  const {email, isLoading} = useSelector(state => state.userSlice.user)
-  console.log(email, isLoading);
 
   const previousSlide = () => {
     setCurrent(current === 0 ? slides.length - 1 : current - 1);
