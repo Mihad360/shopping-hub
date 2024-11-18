@@ -3,17 +3,27 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createSignin, setLoading, setUser } from "../redux/features/userSlice";
+import {
+  createSignin,
+  setLoading,
+  setToken,
+  setUser,
+} from "../redux/features/userSlice";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase/firebase.config";
-import { useAddUserMutation } from "../redux/baseapi/baseApi";
+import {
+  useAddUserMutation,
+  useSaveJwtMutation,
+} from "../redux/baseapi/baseApi";
 
 const Signin = () => {
   const navigate = useNavigate();
   const { email, isLoading } = useSelector((state) => state.userSlice.user);
+  const [saveJwt] = useSaveJwtMutation();
   const [addUser] = useAddUserMutation();
   const googleProvider = new GoogleAuthProvider();
   const dispatch = useDispatch();
+  const from = location.state?.from?.pathname || "/";
 
   const handleGoogle = async () => {
     const res = await signInWithPopup(auth, googleProvider);
@@ -30,8 +40,21 @@ const Signin = () => {
         email: res.user.email,
       };
       await addUser(userInfo);
-      dispatch(setLoading(false));
-      navigate("/");
+      const user = { email: res.user.email };
+      console.log(user);
+      const response = await saveJwt(user);
+      console.log(response);
+      if (response?.data?.token) {
+        localStorage.setItem("access-token", response.data.token);
+        // const accessToken = localStorage.getItem("access-token")
+        dispatch(
+          setToken({
+            token: response.data.token,
+          })
+        );
+        // dispatch(setLoading(false));
+        navigate(from, { replace: true });
+      }
     }
   };
 
@@ -43,13 +66,27 @@ const Signin = () => {
   } = useForm();
   const onSubmit = async ({ email, password }) => {
     console.log(email, password);
-    await dispatch(
+    const res = await dispatch(
       createSignin({
         email,
         password,
       })
     );
-    navigate('/')
+    console.log();
+    const userInfo = { email: email };
+    const response = await saveJwt(userInfo);
+    console.log(response);
+    if (response?.data?.token) {
+      localStorage.setItem("access-token", response.data.token);
+      // const accessToken = localStorage.getItem("access-token")
+      dispatch(
+        setToken({
+          token: response.data.token,
+        })
+      );
+      // dispatch(setLoading(false));
+      navigate("/");
+    }
   };
 
   return (

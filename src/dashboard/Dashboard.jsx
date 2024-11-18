@@ -1,15 +1,19 @@
 import { RiAdminFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
+import { useGetIsAdminQuery } from "../redux/baseapi/baseApi";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const {email} = useSelector(state => state.userSlice.user)
+  const {data: isAdmin} = useGetIsAdminQuery(email)
+  console.log(isAdmin);
 
   return (
     <div className="max-w-[1400px] mx-auto">
       <div>
         
         <div className="flex items-center gap-4 justify-center pb-3 pt-2 fixed z-30 w-[1400px] mx-auto bg-gray-100">
-          {isAdmin ? (
+          {isAdmin?.admin ? (
             <div className="flex items-center gap-4 ">
               <p>
                 <NavLink
@@ -30,7 +34,7 @@ const Dashboard = () => {
               </p>
               <p>
                 <NavLink
-                  to="/dashboard/adminhome"
+                  to="/dashboard/additem"
                   className={({ isActive, isPending }) =>
                     isPending
                       ? "pending"
@@ -47,7 +51,7 @@ const Dashboard = () => {
               </p>
               <p>
                 <NavLink
-                  to="/dashboard/adminhome"
+                  to="/dashboard/manageitems"
                   className={({ isActive, isPending }) =>
                     isPending
                       ? "pending"

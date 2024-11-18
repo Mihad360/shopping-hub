@@ -3,15 +3,13 @@ import { useGetUsersQuery, useUpdateAdminMutation } from "../redux/baseapi/baseA
 import Swal from "sweetalert2";
 import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useUsers from "../hook/useUsers";
-import useAxiosSecure from "../hook/useaxiosSecure";
 
 const Allusers = () => {
 
-    // const {data: users, isLoading} = useGetUsersQuery()
-    // const [updateAdmin, {data}] = useUpdateAdminMutation()
-    const [users, refetch, isLoading] = useUsers()
-    const axiosSecure = useAxiosSecure()
+    const {data: users, isLoading} = useGetUsersQuery()
+    const [updateAdmin, {data}] = useUpdateAdminMutation()
+    // const [users, refetch, isLoading] = useUsers()
+    // const axiosSecure = useAxiosSecure()
 
     const makeAdmin = (id) => {
       Swal.fire({
@@ -24,7 +22,8 @@ const Allusers = () => {
         confirmButtonText: "Yes, Make it!"
       }).then(async(result) => {
         if (result.isConfirmed) {
-          const res = await axiosSecure.patch(`/users/admin/${id}`)
+          const res = await updateAdmin(id)
+          // const res = await axiosSecure.patch(`/users/admin/${id}`)
           console.log(res);
           if(res.data.modifiedCount > 0){
             toast('✔️ The user is now an Admin', {
@@ -38,7 +37,7 @@ const Allusers = () => {
               theme: "colored",
               transition: Bounce,
               });
-              refetch()
+              // refetch()
           }
         }
       });

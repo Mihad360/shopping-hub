@@ -9,6 +9,9 @@ import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
 import Privateroute from "./Privateroute";
 import Allusers from "../adminRoutes/Allusers";
+import Additem from "../adminRoutes/Additem";
+import Manageitems from "../adminRoutes/Manageitems";
+import Adminroute from "../adminRoutes/Adminroute";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +55,14 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/allusers',
         element: <Allusers></Allusers>
+      },
+      {
+        path: '/dashboard/additem',
+        element: <Adminroute><Additem></Additem></Adminroute>
+      },
+      {
+        path: '/dashboard/manageitems',
+        element: <Manageitems></Manageitems>
       }
     ],
   },

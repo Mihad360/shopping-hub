@@ -1,0 +1,39 @@
+[
+    {
+      "title": "Stylish Men's Shirt",
+      "category": "shirt",
+      "price": 1200,
+      "description": "A premium quality jacket with a sleek design, perfect for casual and formal occasions.",
+      "discount": 10,
+      "image": "https://i.ibb.co.com/gyQqBGr/download-removebg-preview-1.png",
+      "stock": 25
+    },
+    {
+      "title": "Wireless Bluetooth Earbuds",
+      "category": "saree",
+      "price": 1500,
+      "description": "Experience superior sound quality and noise cancellation with our wireless earbuds.",
+      "discount": 15,
+      "image": "https://i.ibb.co.com/9GKqNMY/download-removebg-preview-2.png",
+      "stock": 50
+    },
+    {
+      "title": "Modern Coffee Table",
+      "category": "saree",
+      "price": 2000,
+      "description": "A stylish coffee table made with durable materials, perfect for any living room setup.",
+      "discount": 5,
+      "image": "https://i.ibb.co.com/gyQqBGr/download-removebg-preview-1.png",
+      "stock": 10
+    },
+    {
+      "title": "Fitness Smartwatch",
+      "category": "pants",
+      "price": 1750,
+      "description": "Track your fitness goals with this sleek and modern smartwatch, featuring multiple health metrics.",
+      "discount": 20,
+      "image": "https://i.ibb.co.com/gyQqBGr/download-removebg-preview-1.png",
+      "stock": 30
+    }
+  ]
+  

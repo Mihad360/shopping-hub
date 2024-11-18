@@ -1,4 +1,5 @@
 import Homebanner from "./Homebanner";
+import Newarrival from "./Newarrival";
 
 const Home = () => {
   const slides = [
@@ -12,6 +13,9 @@ const Home = () => {
     <div>
       <div className="pt-[66px]">
         <Homebanner slides={slides}></Homebanner>
+      </div>
+      <div>
+        <Newarrival></Newarrival>
       </div>
     </div>
   );

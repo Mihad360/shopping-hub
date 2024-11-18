@@ -2,14 +2,15 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser, setLoading, setUser} from "../redux/features/userSlice";
+import { createUser, setLoading, setToken, setUser} from "../redux/features/userSlice";
 import { useEffect } from "react";
-import { useAddUserMutation } from "../redux/baseapi/baseApi";
+import { useAddUserMutation, useSaveJwtMutation } from "../redux/baseapi/baseApi";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase/firebase.config";
 
 const Signup = () => {
   const navigate = useNavigate()
+  const [saveJwt] = useSaveJwtMutation();
   const {email, isLoading} = useSelector(state => state.userSlice.user)
   const [addUser, {data }] = useAddUserMutation()
   const googleProvider = new GoogleAuthProvider()
@@ -28,8 +29,21 @@ const Signup = () => {
         email: res.user.email,
       }
       await addUser(userInfo)
-      dispatch(setLoading(false))
-      navigate('/')
+      const user = { email: res.user.email };
+      console.log(user);
+      const response = await saveJwt(user);
+      console.log(response);
+      if (response?.data?.token) {
+        localStorage.setItem("access-token", response.data.token);
+        // const accessToken = localStorage.getItem("access-token")
+        dispatch(
+          setToken({
+            token: response.data.token,
+          })
+        );
+        // dispatch(setLoading(false));
+        navigate("/");
+      }
     }
   }
 
@@ -54,16 +68,24 @@ const Signup = () => {
     }
     console.log(userInfo);
     const res = await addUser(userInfo)
-    if(res.data.insertedId){
-      navigate('/')
+    if(res?.data?.insertedId){
+      const user = { email: email };
+      console.log(user);
+      const response = await saveJwt(user);
+      console.log(response);
+      if (response?.data?.token) {
+        localStorage.setItem("access-token", response.data.token);
+        // const accessToken = localStorage.getItem("access-token")
+        dispatch(
+          setToken({
+            token: response.data.token,
+          })
+        );
+        // dispatch(setLoading(false));
+        navigate("/");
+      }
     }
   };
-
-  // useEffect(() => {
-  //   if (!isLoading && email) {
-  //     navigate("/");
-  //   }
-  // }, [isLoading, email, navigate]);
 
   return (
     <div>

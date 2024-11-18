@@ -11,9 +11,8 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     dispatch(setLoading(true));
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       console.log(currentUser);
-      setTimeout(async () => {
         if (currentUser) {
           await dispatch(
             setUser({
@@ -21,17 +20,18 @@ const AuthProvider = ({ children }) => {
               email: currentUser.email,
             })
           );
-          const userInfo = { email: currentUser.email };
-          const res = await saveJwt(userInfo);
-          console.log(res);
-          if (res.data.token) {
-            // localStorage.setItem("access-token", res.data.token);
-            // const accessToken = localStorage.getItem("access-token")
-            dispatch(setToken({
-                token: res.data.token
-              }))
-            dispatch(setLoading(false));
-          }
+          dispatch(setLoading(false));
+          // const userInfo = { email: currentUser.email };
+          // const res = await saveJwt(userInfo);
+          // console.log(res);
+          // if (res?.data?.token) {
+          //   localStorage.setItem("access-token", res.data.token);
+          //   // const accessToken = localStorage.getItem("access-token")
+          //   dispatch(setToken({
+          //       token: res.data.token
+          //     }))
+          //   dispatch(setLoading(false));
+          // }
         } else {
           localStorage.removeItem("access-token");
           dispatch(setToken({
@@ -39,7 +39,6 @@ const AuthProvider = ({ children }) => {
           }))
           dispatch(setLoading(false));
         }
-      }, 1000);
     });
 
     return () => {
@@ -47,7 +46,7 @@ const AuthProvider = ({ children }) => {
     };
   }, [dispatch,saveJwt]);
 
-  return <>{children}</>;
+  return children;
 };
 
 export default AuthProvider;
