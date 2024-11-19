@@ -12,6 +12,7 @@ import Allusers from "../adminRoutes/Allusers";
 import Additem from "../adminRoutes/Additem";
 import Manageitems from "../adminRoutes/Manageitems";
 import Adminroute from "../adminRoutes/Adminroute";
+import EditShopitem from "../adminRoutes/EditShopitem";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/manageitems',
         element: <Manageitems></Manageitems>
+      },
+      {
+        path: '/dashboard/manageitems/edititems/:id',
+        element: <EditShopitem></EditShopitem>
       }
     ],
   },

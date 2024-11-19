@@ -1,6 +1,12 @@
 import { useForm } from "react-hook-form";
+import { useAddItemMutation } from "../redux/baseapi/baseApi";
+import { Bounce, toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const AddItem = () => {
+
+  const [addItem, {data}] = useAddItemMutation()
+
   const {
     register,
     handleSubmit,
@@ -9,11 +15,46 @@ const AddItem = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Form Data:", data);
+    const shop = {
+      title: data.title,
+      image: data.image,
+      category: data.category,
+      description: data.description,
+      discount: parseFloat(data.discount),
+      price: parseFloat(data.price),
+      stock: parseFloat(data.stock),
+    }
+    // console.log(shop);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to add those item?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Add!"
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        const res = await addItem(shop)
+        if(res?.data?.insertedId){
+          toast('✔️ The Item is added', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+        }
+      }
+    });
   };
 
   return (
-    <div className="pt-28">
+    <div className="pt-24">
       <div className="flex justify-center items-center">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -27,13 +68,13 @@ const AddItem = () => {
             {/* Title Input */}
             <div className="w-full md:w-1/2 px-4 mb-4">
               <label
-                className="block text-green-700 font-medium mb-2"
+                className="block text-green-600 font-medium mb-2"
                 htmlFor="title"
               >
                 Title
               </label>
               <input
-              placeholder="Title"
+                placeholder="Title"
                 id="title"
                 type="text"
                 {...register("title", { required: "Title is required" })}
@@ -49,13 +90,13 @@ const AddItem = () => {
             {/* Image Link Input */}
             <div className="w-full md:w-1/2 px-4 mb-4">
               <label
-                className="block text-green-700 font-medium mb-2"
+                className="block text-green-600 font-medium mb-2"
                 htmlFor="image"
               >
                 Image Link
               </label>
               <input
-              placeholder="Image URL"
+                placeholder="Image URL"
                 id="image"
                 type="url"
                 {...register("image", {
@@ -63,9 +104,9 @@ const AddItem = () => {
                 })}
                 className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               />
-              {errors.imageLink && (
+              {errors.image && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.imageLink.message}
+                  {errors.image.message}
                 </p>
               )}
             </div>
@@ -73,14 +114,14 @@ const AddItem = () => {
             {/* Category Dropdown */}
             <div className="w-full md:w-1/2 px-4 mb-4">
               <label
-                className="block text-green-700 font-medium mb-2"
+                className="block text-green-600 font-medium mb-2"
                 htmlFor="category"
               >
                 Category
               </label>
               <select
                 id="category"
-                defaultValue=''
+                defaultValue=""
                 {...register("category", { required: "Category is required" })}
                 className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               >
@@ -104,13 +145,13 @@ const AddItem = () => {
             {/* Price Input */}
             <div className="w-full md:w-1/2 px-4 mb-4">
               <label
-                className="block text-green-700 font-medium mb-2"
+                className="block text-green-600 font-medium mb-2"
                 htmlFor="price"
               >
                 Price
               </label>
               <input
-              placeholder="Price"
+                placeholder="Price"
                 id="price"
                 type="number"
                 {...register("price", { required: "Price is required" })}
@@ -123,10 +164,64 @@ const AddItem = () => {
               )}
             </div>
 
+            {/* Discount Input */}
+            <div className="w-full md:w-1/2 px-4 mb-4">
+              <label
+                className="block text-green-600 font-medium mb-2"
+                htmlFor="discount"
+              >
+                Discount (%)
+              </label>
+              <input
+                placeholder="Discount"
+                id="discount"
+                type="number"
+                {...register("discount", {
+                  required: "Discount is required",
+                  min: {
+                    value: 0,
+                    message: "Discount cannot be negative",
+                  },
+                  max: {
+                    value: 100,
+                    message: "Discount cannot exceed 100%",
+                  },
+                })}
+                className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+              {errors.discount && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.discount.message}
+                </p>
+              )}
+            </div>
+
+            {/* Stock Input */}
+            <div className="w-full md:w-1/2 px-4 mb-4">
+              <label
+                className="block text-green-600 font-medium mb-2"
+                htmlFor="stock"
+              >
+                Stock
+              </label>
+              <input
+                placeholder="Stock Quantity"
+                id="stock"
+                type="number"
+                {...register("stock", { required: "Stock is required" })}
+                className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+              {errors.stock && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.stock.message}
+                </p>
+              )}
+            </div>
+
             {/* Description Input */}
             <div className="w-full px-4 mb-4">
               <label
-                className="block text-green-700 font-medium mb-2"
+                className="block text-green-600 font-medium mb-2"
                 htmlFor="description"
               >
                 Description

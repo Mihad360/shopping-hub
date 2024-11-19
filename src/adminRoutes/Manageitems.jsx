@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetShopQuery } from "../redux/baseapi/baseApi";
+import { useDeleteShopItemMutation, useGetShopQuery } from "../redux/baseapi/baseApi";
+import { Bounce, toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Manageitems = () => {
   const { data: items, isLoading } = useGetShopQuery();
+  const [deleteItem, {data}] = useDeleteShopItemMutation()
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   if (isLoading) {
@@ -15,6 +18,35 @@ const Manageitems = () => {
     selectedCategory === "All"
       ? items
       : items?.filter((item) => item.category === selectedCategory);
+
+      const handledelete = (id) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to remove this item?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Remove!"
+        }).then(async(result) => {
+          if (result.isConfirmed) {
+            const res = await deleteItem(id)
+            if(res?.data?.deletedCount > 0){
+              toast('✔️ The Item is Removed', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+            }
+          }
+        });
+      }
 
   return (
     <div>
@@ -71,7 +103,7 @@ const Manageitems = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredItems?.map((item, index) => (
+                    {[...filteredItems]?.reverse().map((item, index) => (
                       <tr key={item._id}>
                         <th>{index + 1}</th>
                         <td>
@@ -91,17 +123,19 @@ const Manageitems = () => {
                           {item.price} TK
                         </td>
                         <th>
-                          <button
+                          <Link
+                          to={`/dashboard/manageitems/edititems/${item._id}`}
                             className="btn bg-green-600 hover:bg-green-400 btn-sm text-white text-base mr-3"
                           >
                             Edit
-                          </button>
+                          </Link>
                         </th>
                         <th>
                           <button
+                          onClick={()=>handledelete(item._id)}
                             className="btn bg-red-600 hover:bg-red-400 btn-sm text-white text-base mr-3"
                           >
-                            Delete
+                            Remove
                           </button>
                         </th>
                       </tr>

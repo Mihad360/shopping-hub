@@ -5,6 +5,7 @@ import {
 } from "../redux/baseapi/baseApi";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Bounce, toast } from "react-toastify";
 
 const Cart = () => {
   const { email } = useSelector((state) => state.userSlice.user);
@@ -16,16 +17,34 @@ const Cart = () => {
   );
 
   const handledelete = async (id) => {
-    const res = await deleteCart(id);
-    if (res?.data?.deletedCount > 0) {
-      Swal.fire({
-        position: "top-left",
-        icon: "success",
-        title: `This Cart has been removed`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to remove this Cart?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Remove!"
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        const res = await deleteCart(id)
+        // const res = await axiosSecure.patch(`/users/admin/${id}`)
+        console.log(res);
+        if(res?.data?.deletedCount > 0){
+          toast('✔️ This Cart is removed', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+        }
+      }
+    });
   };
 
   return (

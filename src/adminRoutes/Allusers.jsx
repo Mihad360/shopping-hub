@@ -1,5 +1,5 @@
 import { RiAdminFill } from "react-icons/ri";
-import { useGetUsersQuery, useUpdateAdminMutation } from "../redux/baseapi/baseApi";
+import { useDeleteUserMutation, useGetUsersQuery, useUpdateAdminMutation } from "../redux/baseapi/baseApi";
 import Swal from "sweetalert2";
 import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,8 +8,10 @@ const Allusers = () => {
 
     const {data: users, isLoading} = useGetUsersQuery()
     const [updateAdmin, {data}] = useUpdateAdminMutation()
+    const [deleteUser, {data: deleteuser}] = useDeleteUserMutation()
     // const [users, refetch, isLoading] = useUsers()
     // const axiosSecure = useAxiosSecure()
+    console.log(deleteuser);
 
     const makeAdmin = (id) => {
       Swal.fire({
@@ -34,10 +36,41 @@ const Allusers = () => {
               pauseOnHover: false,
               draggable: false,
               progress: undefined,
-              theme: "colored",
+              theme: "dark",
               transition: Bounce,
               });
               // refetch()
+          }
+        }
+      });
+    }
+
+    const handledelete = async (id) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to remove this user?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Remove!"
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          const res = await deleteUser(id)
+          // const res = await axiosSecure.patch(`/users/admin/${id}`)
+          console.log(res);
+          if(res?.data?.deletedCount > 0){
+            toast('✔️ The user is removed', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+              theme: "dark",
+              transition: Bounce,
+              });
           }
         }
       });
@@ -94,7 +127,7 @@ const Allusers = () => {
                           onClick={() => handledelete(item._id)}
                           className="btn bg-red-600 hover:bg-red-400 btn-sm mx-auto text-white text-base mr-3"
                         >
-                          delete user
+                          Remove user
                         </button>
                       </th>
                     </tr>

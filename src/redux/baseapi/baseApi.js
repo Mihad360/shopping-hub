@@ -32,10 +32,28 @@ const BaseQueryWithLogout = async (args, api, extraOptions) => {
 const shopapi = createApi({
   reducerPath: "api",
   baseQuery: BaseQueryWithLogout,
-  tagTypes: ["Cart", "User"],
+  tagTypes: ["Cart", "User", "Shop"],
   endpoints: (builder) => ({
     getShop: builder.query({
       query: () => "/shop",
+      providesTags: ["Shop"],
+    }),
+    addItem: builder.mutation({
+      query: (data) => ({
+        url: '/shop',
+        method: 'POST',
+        body: data
+      })
+    }),
+    deleteShopItem: builder.mutation({
+      query: (id) => ({
+        url: `/shop/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ["Shop"],
+    }),
+    getShopItem: builder.query({
+      query: (id) => `/shop/${id}`
     }),
     addUser: builder.mutation({
       query: (userInfo) => ({
@@ -87,6 +105,13 @@ const shopapi = createApi({
     }),
     getIsAdmin: builder.query({
       query: (email) => `/users/admin/${email}`
+    }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ["User"],
     })
   }),
 });
@@ -101,7 +126,11 @@ export const {
   useUpdateAdminMutation,
   useSaveJwtMutation,
   useGetNewArrivalQuery,
-  useGetIsAdminQuery
+  useGetIsAdminQuery,
+  useDeleteUserMutation,
+  useAddItemMutation,
+  useDeleteShopItemMutation,
+  useGetShopItemQuery,
 } = shopapi;
 
 export default shopapi;
