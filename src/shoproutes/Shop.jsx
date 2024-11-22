@@ -45,7 +45,7 @@ const Shop = () => {
         </div>
         <div className="flex justify-center pt-16">
           <div className="grid grid-cols-4 gap-5">
-            {filterShop?.length > 0 ? filterShop?.map((item) => (
+            {filterShop?.length > 0 ? [...filterShop]?.reverse().map((item) => (
               <Shopcard key={item._id} item={item} />
             )) : <p className="text-xl text-red-600 font-semibold py-12">This category has no items</p>}
           </div>

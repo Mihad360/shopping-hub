@@ -9,9 +9,6 @@ const Allusers = () => {
     const {data: users, isLoading} = useGetUsersQuery()
     const [updateAdmin, {data}] = useUpdateAdminMutation()
     const [deleteUser, {data: deleteuser}] = useDeleteUserMutation()
-    // const [users, refetch, isLoading] = useUsers()
-    // const axiosSecure = useAxiosSecure()
-    console.log(deleteuser);
 
     const makeAdmin = (id) => {
       Swal.fire({
@@ -25,8 +22,6 @@ const Allusers = () => {
       }).then(async(result) => {
         if (result.isConfirmed) {
           const res = await updateAdmin(id)
-          // const res = await axiosSecure.patch(`/users/admin/${id}`)
-          console.log(res);
           if(res.data.modifiedCount > 0){
             toast('✔️ The user is now an Admin', {
               position: "top-right",
@@ -39,7 +34,6 @@ const Allusers = () => {
               theme: "dark",
               transition: Bounce,
               });
-              // refetch()
           }
         }
       });
@@ -57,8 +51,6 @@ const Allusers = () => {
       }).then(async(result) => {
         if (result.isConfirmed) {
           const res = await deleteUser(id)
-          // const res = await axiosSecure.patch(`/users/admin/${id}`)
-          console.log(res);
           if(res?.data?.deletedCount > 0){
             toast('✔️ The user is removed', {
               position: "top-right",

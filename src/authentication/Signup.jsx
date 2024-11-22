@@ -2,17 +2,20 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser, setLoading, setToken, setUser} from "../redux/features/userSlice";
-import { useEffect } from "react";
+import { createUser, setToken, setUser} from "../redux/features/userSlice";
 import { useAddUserMutation, useSaveJwtMutation } from "../redux/baseapi/baseApi";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import auth from "../firebase/firebase.config";
+import axios from "axios";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
 
 const Signup = () => {
   const navigate = useNavigate()
   const [saveJwt] = useSaveJwtMutation();
-  const {email, isLoading} = useSelector(state => state.userSlice.user)
-  const [addUser, {data }] = useAddUserMutation()
+  // const {email, isLoading} = useSelector(state => state.userSlice.user)
+  const [addUser] = useAddUserMutation()
   const googleProvider = new GoogleAuthProvider()
   const dispatch = useDispatch();
 
@@ -42,7 +45,8 @@ const Signup = () => {
           })
         );
         // dispatch(setLoading(false));
-        navigate("/");
+        // navigate("/");
+        window.location.href = "/";
       }
     }
   }
@@ -53,24 +57,30 @@ const Signup = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = async({ email, password, name }) => {
-    console.log(email, password, name);
+  const onSubmit = async({ email, password, name, image }) => {
+    const imageFile = {image: image[0]}
+    const resimage = await axios.post(image_hosting_url, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    })
+    const profilePhoto = await resimage?.data.data.display_url;
+    console.log(profilePhoto);
     await dispatch(
       createUser({
         email,
         password,
         name,
+        image: profilePhoto,
       })
     );
     const userInfo = {
       name: name,
       email: email,
     }
-    console.log(userInfo);
     const res = await addUser(userInfo)
     if(res?.data?.insertedId){
       const user = { email: email };
-      console.log(user);
       const response = await saveJwt(user);
       console.log(response);
       if (response?.data?.token) {
@@ -81,8 +91,10 @@ const Signup = () => {
             token: response.data.token,
           })
         );
+        // reset()
         // dispatch(setLoading(false));
-        navigate("/");
+        // navigate("/");
+        window.location.href = "/";
       }
     }
   };

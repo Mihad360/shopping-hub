@@ -10,6 +10,7 @@ const initialState = {
   user: {
     name: "",
     email: "",
+    image: "",
     isLoading: true,
     isError: false,
     error: "",
@@ -21,11 +22,12 @@ const initialState = {
 
 export const createUser = createAsyncThunk(
   "userSlice/createUser",
-  async ({ email, password, name }) => {
+  async ({ email, password, name, image }) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
     // console.log(data);
     await updateProfile(auth.currentUser, {
       displayName: name,
+      photoURL: image,
     });
     console.log(data.user.displayName);
     return {
@@ -57,7 +59,7 @@ const userSlice = createSlice({
     setUser: (state, { payload }) => {
       state.user.name = payload.name;
       state.user.email = payload.email;
-      // state.user.isLoading = false
+      state.user.image = payload.image
     },
     setLoading: (state, { payload }) => {
       state.user.isLoading = payload;

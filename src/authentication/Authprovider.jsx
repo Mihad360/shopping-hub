@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
             setUser({
               name: currentUser.displayName || "",
               email: currentUser.email,
+              image: currentUser.photoURL
             })
           );
           dispatch(setLoading(false));

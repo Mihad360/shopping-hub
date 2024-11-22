@@ -53,7 +53,8 @@ const Signin = () => {
           })
         );
         // dispatch(setLoading(false));
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
+        window.location.href = "/";
       }
     }
   };
@@ -72,20 +73,25 @@ const Signin = () => {
         password,
       })
     );
-    console.log();
-    const userInfo = { email: email };
-    const response = await saveJwt(userInfo);
-    console.log(response);
-    if (response?.data?.token) {
-      localStorage.setItem("access-token", response.data.token);
-      // const accessToken = localStorage.getItem("access-token")
-      dispatch(
-        setToken({
-          token: response.data.token,
-        })
-      );
-      // dispatch(setLoading(false));
-      navigate("/");
+    // console.log(res.meta.requestStatus);
+    if(res?.meta.requestStatus === "fulfilled"){
+      const userInfo = { email: email };
+      const response = await saveJwt(userInfo);
+      console.log(response);
+      if (response?.data?.token) {
+        localStorage.setItem("access-token", response.data.token);
+        // const accessToken = localStorage.getItem("access-token")
+        dispatch(
+          setToken({
+            token: response.data.token,
+          })
+        );
+        // dispatch(setLoading(false));
+        // navigate("/");
+        window.location.href = "/";
+      }
+    }else{
+      console.log(res?.error.message);
     }
   };
 

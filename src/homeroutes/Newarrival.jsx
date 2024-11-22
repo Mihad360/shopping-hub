@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const Newarrival = () => {
   const { data, isLoading, error } = useGetNewArrivalQuery();
+  
 
   if (isLoading) {
     return <p>Loading new arrivals...</p>;
@@ -35,14 +36,23 @@ const Newarrival = () => {
                 <h3 className="text-xl font-semibold text-center mb-2">
                   {product.title}
                 </h3>
-                <p className="text-lg text-black text-center">
+                {/* <p className="text-lg text-black text-center">
                   <span className="">{product.price.toFixed(2)}</span> TK
-                </p>
+                </p> */}
                 {product.discount > 0 && (
                   <p className="text-lg pt-3 text-center text-red-600 font-semibold">
                     {product.discount}% Off
                   </p>
                 )}
+                <div className="flex items-center gap-4 justify-center pt-3">
+                  <p className="line-through text-red-500">{product.price} TK</p>
+                  <p>➜</p>
+                  {
+                  product.discount && <p className="text-lg font-medium text-black">{product.price * (1 - product.discount / 100)} TK</p>
+                }
+                </div>
+                <p className="text-base pt-2 text-center">Coming on <span className="text-black font-semibold">({product.date})</span></p>
+                
               </div>
               </div>
               <Link to='/shop' className="btn btn-sm bg-slate-600 border border-slate-600 hover:bg-slate-500 hover:border-slate-600 text-lg mb-2 mt-2 text-white">View In Shop</Link>

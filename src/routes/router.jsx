@@ -13,6 +13,7 @@ import Additem from "../adminRoutes/Additem";
 import Manageitems from "../adminRoutes/Manageitems";
 import Adminroute from "../adminRoutes/Adminroute";
 import EditShopitem from "../adminRoutes/EditShopitem";
+import AddNewArrival from "../adminRoutes/Addnewarrival";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/manageitems/edititems/:id',
         element: <EditShopitem></EditShopitem>
+      },
+      {
+        path: '/dashboard/addnewarrival',
+        element: <AddNewArrival></AddNewArrival>
       }
     ],
   },

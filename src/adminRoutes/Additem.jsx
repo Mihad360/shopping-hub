@@ -24,7 +24,6 @@ const AddItem = () => {
       price: parseFloat(data.price),
       stock: parseFloat(data.stock),
     }
-    // console.log(shop);
     Swal.fire({
       title: "Are you sure?",
       text: "You want to add those item?",
@@ -37,7 +36,7 @@ const AddItem = () => {
       if (result.isConfirmed) {
         const res = await addItem(shop)
         if(res?.data?.insertedId){
-          toast('✔️ The Item is added', {
+          toast('✔️ The Item was added', {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: true,

@@ -43,7 +43,8 @@ const shopapi = createApi({
         url: '/shop',
         method: 'POST',
         body: data
-      })
+      }),
+      invalidatesTags: ["Shop"],
     }),
     deleteShopItem: builder.mutation({
       query: (id) => ({
@@ -53,7 +54,16 @@ const shopapi = createApi({
       invalidatesTags: ["Shop"],
     }),
     getShopItem: builder.query({
-      query: (id) => `/shop/${id}`
+      query: (id) => `/shop/${id}`,
+      providesTags: ["Shop"],
+    }),
+    updateShopItem: builder.mutation({
+      query: ({id, ...item}) => ({
+        url: `/shop/${id}`,
+        method: 'PATCH',
+        body: item
+      }),
+      invalidatesTags: ["Shop"],
     }),
     addUser: builder.mutation({
       query: (userInfo) => ({
@@ -103,6 +113,13 @@ const shopapi = createApi({
     getNewArrival: builder.query({
       query: () => "/newarrival",
     }),
+    addNewArrival: builder.mutation({
+      query: (data) => ({
+        url: '/newarrival',
+        method: 'POST',
+        body: data
+      })
+    }),
     getIsAdmin: builder.query({
       query: (email) => `/users/admin/${email}`
     }),
@@ -131,6 +148,8 @@ export const {
   useAddItemMutation,
   useDeleteShopItemMutation,
   useGetShopItemQuery,
+  useUpdateShopItemMutation,
+  useAddNewArrivalMutation,
 } = shopapi;
 
 export default shopapi;

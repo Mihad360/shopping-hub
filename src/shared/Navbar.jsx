@@ -10,12 +10,11 @@ import { setLogout } from "../redux/features/userSlice";
 import { useGetCartQuery } from "../redux/baseapi/baseApi";
 
 const Navbar = () => {
-  // State to handle menu toggle
   const [isOpen, setIsOpen] = useState(false);
   const [isdrop, setIsDrop] = useState(false);
   const dropdownRef = useRef(null);
-  const {email} = useSelector(state => state.userSlice.user)
-  const {data} = useGetCartQuery(email)
+  const { email, image, name } = useSelector((state) => state.userSlice.user);
+  const { data } = useGetCartQuery(email);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -23,12 +22,12 @@ const Navbar = () => {
     dispatch(setLogout());
   };
 
-  // Toggle dropdown visibility
   const toggleDropdown = () => {
-    setIsDrop(!isOpen);
+    setIsDrop(!isdrop);
   };
-  // Toggle menu function
+
   const toggleMenu = () => setIsOpen(!isOpen);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -41,7 +40,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full bg-gray-100 z-50 fixed">
-      <div className="text-black max-w-[1400px] mx-auto flex items-center justify-between py-4 font-medium">
+      <div className="text-black max-w-[1400px] mx-auto flex items-center justify-between py-3 font-medium">
         {/* Logo */}
         <div className="font-semibold">
           <NavLink to="/">
@@ -54,16 +53,13 @@ const Navbar = () => {
 
         {/* Hamburger Icon for Mobile */}
         <div className="md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="focus:outline-none text-white"
-          >
+          <button onClick={toggleMenu} className="focus:outline-none text-white">
             <svg
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/3000/svg"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -75,8 +71,8 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Links - Visible on desktop, hidden on mobile */}
-        <div className="hidden md:flex space-x-6 text-lg">
+        {/* Links - Visible on desktop */}
+        <div className="hidden md:flex items-center space-x-6 text-lg">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -120,41 +116,57 @@ const Navbar = () => {
               </p>
             </NavLink>
           </p>
-          <Link to="/signin" className="hover:text-green-400 hover:underline">
-            Sign In
-          </Link>
+          {!email && (
+            <Link to="/signin" className="hover:text-green-400 hover:underline">
+              Sign In
+            </Link>
+          )}
+          {/* Profile Dropdown */}
           <div className="relative inline-block text-left" ref={dropdownRef}>
-            {/* Profile Icon that toggles the dropdown */}
             <p
               onClick={toggleDropdown}
               className="flex items-center cursor-pointer text-gray-600 hover:text-green-400"
             >
-              <CgProfile className="text-3xl" />
+              {email ? (
+                <img
+                  className="w-12 h-12 rounded-full"
+                  src={image}
+                  alt="Profile"
+                />
+              ) : (
+                <CgProfile className="text-3xl" />
+              )}
             </p>
 
             {/* Dropdown Content */}
             {isdrop && (
-              <div
-                className={`absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10
-            transition-all duration-200 transform ${
-              isdrop ? "scale-100 opacity-100" : "scale-95 opacity-0"
-            }`}
-              >
-                {/* Cross Icon */}
+              <div className="absolute right-0 mt-2 min-w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 <div className="flex justify-end p-2">
                   <AiOutlineClose
                     onClick={() => setIsDrop(false)}
                     className="text-gray-500 cursor-pointer hover:text-gray-700"
                   />
                 </div>
+                <div>
+                  {
+                    email ? <div className="bg-green-500 text-center rounded-lg p-2 mx-3">
+                      <img className="w-16 h-16 rounded-full mx-auto" src={image} alt="" />
+                    <h1 className="text-lg text-white font-semibold">{name}</h1>
+                    <p className="text-base underline">{email}</p>
+                  </div> : ""
+                  }
+                </div>
                 <ul className="py-1">
-                  <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-left">
+                  <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right">
                     <li>Profile</li>
                   </button>
-                  <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-left">
+                  <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right">
                     <li>Settings</li>
                   </button>
-                  <button onClick={handleLogout} className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-left">
+                  <button
+                    onClick={handleLogout}
+                    className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right"
+                  >
                     <li>Logout</li>
                   </button>
                 </ul>
@@ -203,27 +215,13 @@ const Navbar = () => {
               Contact Us
             </NavLink>
             <p className="bg-green-400 font-bold rounded-3xl px-2">
-              <NavLink
-                to="/cart"
-                className={({ isActive }) =>
-                  isActive ? "text-green-400 font-bold" : "hover:"
-                }
-              >
+              <NavLink to="/cart">
                 <p className="flex items-center gap-1">
                   <FaCartPlus className="text-2xl" />
                   <span>0</span>
                 </p>
               </NavLink>
             </p>
-            <NavLink
-              to="/profile"
-              onClick={toggleMenu}
-              className={({ isActive }) =>
-                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
-              }
-            >
-              <CgProfile />
-            </NavLink>
           </div>
         )}
       </div>
