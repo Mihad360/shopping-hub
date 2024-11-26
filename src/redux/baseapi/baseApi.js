@@ -120,6 +120,13 @@ const shopapi = createApi({
         body: data
       })
     }),
+    updateStatus: builder.mutation({
+      query: ({id, data}) => ({
+        url: `/newarrival/${id}`,
+        method: 'PATCH',
+        body: data
+      })
+    }),
     getIsAdmin: builder.query({
       query: (email) => `/users/admin/${email}`
     }),
@@ -150,6 +157,7 @@ export const {
   useGetShopItemQuery,
   useUpdateShopItemMutation,
   useAddNewArrivalMutation,
+  useUpdateStatusMutation,
 } = shopapi;
 
 export default shopapi;

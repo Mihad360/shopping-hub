@@ -14,6 +14,7 @@ import Manageitems from "../adminRoutes/Manageitems";
 import Adminroute from "../adminRoutes/Adminroute";
 import EditShopitem from "../adminRoutes/EditShopitem";
 import AddNewArrival from "../adminRoutes/Addnewarrival";
+import ManageNewarrival from "../adminRoutes/ManageNewarrival";
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
         element: <Adminroute><Additem></Additem></Adminroute>
       },
       {
-        path: '/dashboard/manageitems',
+        path: '/dashboard/manageshopitems',
         element: <Manageitems></Manageitems>
       },
       {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/addnewarrival',
         element: <AddNewArrival></AddNewArrival>
+      },
+      {
+        path: '/dashboard/managenewarrival',
+        element: <ManageNewarrival></ManageNewarrival>
       }
     ],
   },

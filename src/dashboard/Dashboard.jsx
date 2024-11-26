@@ -10,7 +10,8 @@ import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Dashboard = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAddItemsOpen, setIsAddItemsOpen] = useState(false);
+  const [isManageItemsOpen, setIsManageItemsOpen] = useState(false);
   const { email } = useSelector((state) => state.userSlice.user);
   const { data: isAdmin } = useGetIsAdminQuery(email);
   console.log(isAdmin);
@@ -38,55 +39,32 @@ const Dashboard = () => {
                   </span>
                 </NavLink>
               </p>
-              {/* <p>
-                <NavLink
-                  to="/dashboard/additem"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
-                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
-                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
-                  }
-                >
-                  <span className="flex items-center gap-1 lg:gap-2">
-                  <MdOutlinePostAdd />
-                    Add Items
-                  </span>
-                </NavLink>
-              </p> */}
               <div className="relative inline-block text-left">
-                {/* Main Button */}
                 <button
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => setIsAddItemsOpen(!isAddItemsOpen)}
                   className="bg-green-600 btn btn-sm px-4 text-white hover:bg-green-400 flex items-center gap-2"
                 >
-                  ▼
-                  Add Items
+                  ▼ Add Items
                 </button>
-
-                {/* Dropdown Menu */}
-                {isOpen && (
+                {isAddItemsOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                    {/* Cross Button */}
                     <div className="flex justify-end p-2">
                       <button
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setIsAddItemsOpen(false)}
                         className="text-red-500 hover:text-red-700"
                       >
                         <AiOutlineClose size={20} />
                       </button>
                     </div>
-                    {/* Dropdown Items */}
-                    <div className="">
+                    <div>
                       <NavLink
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setIsAddItemsOpen(false)}
                         to="/dashboard/additem"
                         className={({ isActive, isPending }) =>
                           isPending
                             ? "pending"
                             : isActive
-                            ? " block font-semibold text-black hover:bg-green-400"
+                            ? "block font-semibold text-black hover:bg-green-400"
                             : "block hover:bg-green-400"
                         }
                       >
@@ -96,7 +74,7 @@ const Dashboard = () => {
                         </span>
                       </NavLink>
                       <NavLink
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setIsAddItemsOpen(false)}
                         to="/dashboard/addnewarrival"
                         className={({ isActive, isPending }) =>
                           isPending
@@ -115,23 +93,61 @@ const Dashboard = () => {
                   </div>
                 )}
               </div>
-              <p>
-                <NavLink
-                  to="/dashboard/manageitems"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
-                      ? "bg-green-600 btn btn-sm px-2 text-black hover:bg-green-400"
-                      : "bg-green-600 btn btn-sm px-2 text-white hover:bg-green-400"
-                  }
+              {/* Manage Items Dropdown */}
+              <div className="relative inline-block text-left">
+                <button
+                  onClick={() => setIsManageItemsOpen(!isManageItemsOpen)}
+                  className="bg-green-600 btn btn-sm px-4 text-white hover:bg-green-400 flex items-center gap-2"
                 >
-                  <span className="flex items-center gap-1 lg:gap-2">
-                    <MdOutlineManageHistory />
-                    Manage Items
-                  </span>
-                </NavLink>
-              </p>
+                  ▼ Manage Items
+                </button>
+                {isManageItemsOpen && (
+                  <div className="absolute right-0 mt-2 w-60 bg-white rounded-md shadow-lg z-10">
+                    <div className="flex justify-end p-2">
+                      <button
+                        onClick={() => setIsManageItemsOpen(false)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <AiOutlineClose size={20} />
+                      </button>
+                    </div>
+                    <div>
+                      <NavLink
+                        onClick={() => setIsManageItemsOpen(false)}
+                        to="/dashboard/manageshopitems"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "block font-semibold text-black hover:bg-green-400"
+                            : "block hover:bg-green-400"
+                        }
+                      >
+                        <span className="flex items-center gap-1 text-black px-4 py-2">
+                          <MdOutlineManageHistory />
+                          Manage Shop Items
+                        </span>
+                      </NavLink>
+                      <NavLink
+                        onClick={() => setIsManageItemsOpen(false)}
+                        to="/dashboard/managenewarrival"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "block font-semibold text-black hover:bg-green-400"
+                            : "block hover:bg-green-400"
+                        }
+                      >
+                        <span className="flex items-center gap-1 text-black px-4 py-2">
+                          <MdOutlineManageHistory />
+                          Manage New Arrival
+                        </span>
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+              </div>
               <p>
                 <NavLink
                   to="/dashboard/allusers"

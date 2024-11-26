@@ -10,7 +10,7 @@ const initialState = {
   user: {
     name: "",
     email: "",
-    image: "",
+    image: null,
     isLoading: true,
     isError: false,
     error: "",

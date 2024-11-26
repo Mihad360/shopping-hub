@@ -4,9 +4,8 @@ import { Bounce, toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const AddNewArrival = () => {
-
-    const [addnewarrival, {data}] = useAddNewArrivalMutation()
-    console.log(data);
+  const [addnewarrival, { data }] = useAddNewArrivalMutation();
+  console.log(data);
 
   const {
     register,
@@ -16,42 +15,43 @@ const AddNewArrival = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-      const newitem = {
-          title: data.title,
-          image: data.image,
-          category: data.category,
-          discount: parseFloat(data.discount),
-          price: parseFloat(data.price),
-          stock: parseFloat(data.stock),
-          date: data.date
+    const newitem = {
+      title: data.title,
+      image: data.image,
+      category: data.category,
+      discount: parseFloat(data.discount),
+      price: parseFloat(data.price),
+      stock: parseFloat(data.stock),
+      date: data.date,
+      status: data.status
+    };
+    console.log(data, newitem);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to add this new item?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Add!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await addnewarrival(newitem);
+        if (res?.data?.insertedId) {
+          toast("✔️ The Item was added", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          });
         }
-        console.log(data,newitem);
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You want to add this new item?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Add!"
-      }).then(async(result) => {
-        if (result.isConfirmed) {
-          const res = await addnewarrival(newitem)
-          if(res?.data?.insertedId){
-            toast('✔️ The Item was added', {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-              progress: undefined,
-              theme: "dark",
-              transition: Bounce,
-              });
-          }
-        }
-      });
+      }
+    });
   };
 
   return (
@@ -96,7 +96,6 @@ const AddNewArrival = () => {
                 </p>
               )}
             </div>
-            
           </div>
 
           {/* Flex Container */}
@@ -105,7 +104,7 @@ const AddNewArrival = () => {
             <div className="flex-1 min-w-[300px]">
               <label className="block font-medium mb-1">Category</label>
               <select
-              defaultValue=""
+                defaultValue=""
                 {...register("category", { required: "Category is required" })}
                 className="select select-bordered w-full"
               >
@@ -187,7 +186,8 @@ const AddNewArrival = () => {
             </div>
           </div>
 
-          <div className="flex-1 min-w-[300px]">
+          <div className="flex flex-wrap gap-6">
+            <div className="flex-1 min-w-[300px]">
               <label className="block font-medium mb-1">Image URL</label>
               <input
                 type="url"
@@ -201,6 +201,24 @@ const AddNewArrival = () => {
                 </p>
               )}
             </div>
+            <div className="flex-1 min-w-[300px]">
+              <label className="block font-medium mb-1">Status</label>
+              <select
+              defaultValue=""
+                {...register("status", { required: "status is required" })}
+                className="select select-bordered w-full"
+              >
+                <option value="pending">pending</option>
+                <option value="in stock">in stock</option>
+                <option value="out of stock">out of stock</option>
+              </select>
+              {errors.status && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.status.message}
+                </p>
+              )}
+            </div>
+          </div>
 
           {/* Submit Button */}
           <div className="text-center">
