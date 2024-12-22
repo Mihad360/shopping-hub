@@ -5,6 +5,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import auth from "../firebase/firebase.config";
 import { setLoading, setToken, setUser } from "../redux/features/userSlice";
 import { useSaveJwtMutation } from "../redux/baseapi/baseApi";
+import Loading from "../components/Loading";
 
 // eslint-disable-next-line react/prop-types
 const Privateroute = ({ children }) => {
@@ -50,7 +51,7 @@ const Privateroute = ({ children }) => {
 
   // Show a loading message if isLoading is true
   if (isLoading) {
-    return <p className="py-32">Loading .........</p>;
+    return <Loading></Loading>
   }
 
   // Proceed with redirect logic

@@ -1,16 +1,17 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetIsAdminQuery } from "../redux/baseapi/baseApi";
+import Loading from "../components/Loading";
 
 const Adminroute = ({children}) => {
 
     const {email, isLoading} = useSelector(state => state.userSlice.user)
     const {data: isAdmin, isLoading: loading} = useGetIsAdminQuery(email)
     const location = useLocation()
-    // console.log(email, isAdmin);
+    console.log(email, isAdmin);
 
     if(isLoading || loading){
-        return <p className="pt-32">Loading......</p>
+        return <Loading></Loading>
     }
 
     if(email && isAdmin?.admin){

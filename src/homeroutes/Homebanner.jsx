@@ -29,7 +29,7 @@ const Homebanner = ({ slides, autoplayInterval = 4000 }) => {
   }
 
   return (
-    <div className="relative w-full h-[600px] mb-10 overflow-hidden max-w-[1400px] mx-auto">
+    <div className="relative w-full h-[600px] mb-10 overflow-hidden container mx-auto">
       {/* Slide images with overlay */}
       <div
                 className="flex transition-transform ease-out duration-300"

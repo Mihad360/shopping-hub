@@ -15,7 +15,7 @@ const Newarrival = () => {
   }
 
   return (
-    <div className="pt-12 max-w-[1400px] mx-auto">
+    <div className="pt-12 container mx-auto">
       <h2 className="text-2xl font-bold text-center pb-12">New Arrivals</h2>
       <Marquee gradient={false} speed={100} pauseOnHover className="space-x-5">
         <div className="flex gap-5">

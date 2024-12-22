@@ -40,7 +40,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full bg-gray-100 z-50 fixed">
-      <div className="text-black max-w-[1400px] mx-auto flex items-center justify-between py-3 font-medium">
+      <div className="text-black container mx-auto flex items-center justify-between py-3 font-medium">
         {/* Logo */}
         <div className="font-semibold">
           <NavLink to="/">

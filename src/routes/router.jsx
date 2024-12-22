@@ -56,29 +56,37 @@ const router = createBrowserRouter([
         element: <Cart></Cart>,
       },
       {
-        path: '/dashboard/allusers',
-        element: <Allusers></Allusers>
+        path: "/dashboard/allusers",
+        element: (
+          <Adminroute>
+            <Allusers></Allusers>
+          </Adminroute>
+        ),
       },
       {
-        path: '/dashboard/additem',
-        element: <Adminroute><Additem></Additem></Adminroute>
+        path: "/dashboard/additem",
+        element: (
+          <Adminroute>
+            <Additem></Additem>
+          </Adminroute>
+        ),
       },
       {
-        path: '/dashboard/manageshopitems',
-        element: <Manageitems></Manageitems>
+        path: "/dashboard/manageshopitems",
+        element: <Manageitems></Manageitems>,
       },
       {
-        path: '/dashboard/manageitems/edititems/:id',
-        element: <EditShopitem></EditShopitem>
+        path: "/dashboard/manageitems/edititems/:id",
+        element: <EditShopitem></EditShopitem>,
       },
       {
-        path: '/dashboard/addnewarrival',
-        element: <AddNewArrival></AddNewArrival>
+        path: "/dashboard/addnewarrival",
+        element: <AddNewArrival></AddNewArrival>,
       },
       {
-        path: '/dashboard/managenewarrival',
-        element: <ManageNewarrival></ManageNewarrival>
-      }
+        path: "/dashboard/managenewarrival",
+        element: <ManageNewarrival></ManageNewarrival>,
+      },
     ],
   },
 ]);
