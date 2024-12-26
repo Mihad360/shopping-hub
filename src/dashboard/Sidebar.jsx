@@ -16,7 +16,7 @@ const Sidebar = () => {
   const { data: isAdmin } = useGetIsAdminQuery(email);
 
   return (
-    <div className="min-h-screen w-72 text-green-800 p-6">
+    <div className=" h-full w-72 text-green-800 p-6">
       <div className="mb-8">
         <h1 className="text-black flex items-center gap-3 pb-3 border-b-green-300 border-b-2">
           <FaShopify className="text-4xl" />
@@ -167,7 +167,7 @@ const Sidebar = () => {
               <span className="font-medium">Cart Items</span>
             </NavLink>
             <NavLink
-              to="/dashboard/payment"
+              to="/dashboard/checkout"
               className={({ isActive }) =>
                 `flex items-center p-3 rounded-lg transition-all duration-300 ${
                   isActive
@@ -177,10 +177,10 @@ const Sidebar = () => {
               }
             >
               <FaBook className="mr-3 text-xl" />
-              <span className="font-medium">Payment</span>
+              <span className="font-medium">Checkout</span>
             </NavLink>
             <NavLink
-              to="/dashboard/paymenthistory"
+              to="/dashboard/checkouthistory"
               className={({ isActive }) =>
                 `flex items-center p-3 rounded-lg transition-all duration-300 ${
                   isActive
@@ -190,7 +190,7 @@ const Sidebar = () => {
               }
             >
               <FaHistory className="mr-3 text-xl" />
-              <span className="font-medium">Payment History</span>
+              <span className="font-medium">Checkout History</span>
             </NavLink>
             <NavLink
               to="/dashboard/reviews"

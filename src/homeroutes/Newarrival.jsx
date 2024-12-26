@@ -1,67 +1,117 @@
 import Marquee from "react-fast-marquee";
 import { useGetNewArrivalQuery } from "../redux/baseapi/baseApi";
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
 
-const Newarrival = () => {
+const NewArrivals = () => {
   const { data, isLoading, error } = useGetNewArrivalQuery();
-  
 
   if (isLoading) {
-    return <p>Loading new arrivals...</p>;
+    return (
+      <Loading></Loading>
+    );
   }
 
   if (error) {
-    return <p>Something went wrong. Please try again later.</p>;
+    return (
+      <div className="text-center text-red-600 py-12">
+        <p className="text-xl font-semibold">Oops! Something went wrong.</p>
+        <p className="mt-2">
+          Please try again later or contact support if the problem persists.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="pt-12 container mx-auto">
-      <h2 className="text-2xl font-bold text-center pb-12">New Arrivals</h2>
-      <Marquee gradient={false} speed={100} pauseOnHover className="space-x-5">
-        <div className="flex gap-5">
-          {data?.map((product) => (
-            <div
-              key={product._id}
-              className="flex flex-col items-center bg-green-300 shadow-md rounded-lg p-4 hover:shadow-lg transition duration-300"
-            >
-              <div className="flex items-center gap-5">
-              <div>
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-60 h-60 object-cover rounded-lg mb-2"
-                />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-center mb-2">
-                  {product.title}
-                </h3>
-                {/* <p className="text-lg text-black text-center">
-                  <span className="">{product.price.toFixed(2)}</span> TK
-                </p> */}
-                {product.discount > 0 && (
-                  <p className="text-lg pt-3 text-center text-red-600 font-semibold">
-                    {product.discount}% Off
-                  </p>
-                )}
-                <div className="flex items-center gap-4 justify-center pt-3">
-                  <p className="line-through text-red-500">{product.price} TK</p>
-                  <p>➜</p>
-                  {
-                  product.discount && <p className="text-lg font-medium text-black">{product.price * (1 - product.discount / 100)} TK</p>
-                }
+    <section className="bg-gradient-to-r from-green-50 to-emerald-50 py-16">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
+          New Arrivals
+        </h2>
+        <Marquee gradient={false} speed={50} pauseOnHover className="py-4 space-x-8">
+          <div className="flex gap-8">
+            {data?.map((product) => (
+              <div
+                key={product._id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden w-72 transform transition duration-300 hover:scale-105 group"
+              >
+                <div className="relative">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-64 object-cover"
+                  />
+                  <Link
+                    to="/shop"
+                    className="absolute bottom-0 left-0 right-0 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 transition duration-300 ease-in-out flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-full group-hover:translate-y-0"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                      />
+                    </svg>
+                    View in Shop
+                  </Link>
                 </div>
-                <p className="text-base pt-2 text-center">Coming on <span className="text-black font-semibold">({product.date})</span></p>
-                
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2 truncate">
+                    {product.title}
+                  </h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center">
+                      {product.discount > 0 && (
+                        <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded mr-2">
+                          {product.discount}% OFF
+                        </span>
+                      )}
+                      <span className="text-lg font-bold text-green-700">
+                        {(product.price * (1 - product.discount / 100)).toFixed(
+                          2
+                        )}{" "}
+                        TK
+                      </span>
+                    </div>
+                    {product.discount > 0 && (
+                      <span className="text-sm text-gray-500 line-through">
+                        {product.price.toFixed(2)} TK
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center text-green-600 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span>Coming on {product.date}</span>
+                  </div>
+                </div>
               </div>
-              </div>
-              <Link to='/shop' className="btn btn-sm bg-slate-600 border border-slate-600 hover:bg-slate-500 hover:border-slate-600 text-lg mb-2 mt-2 text-white">View In Shop</Link>
-            </div>
-          ))}
-        </div>
-      </Marquee>
-    </div>
+            ))}
+          </div>
+        </Marquee>
+      </div>
+    </section>
   );
 };
 
-export default Newarrival;
+export default NewArrivals;

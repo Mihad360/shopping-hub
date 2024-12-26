@@ -58,7 +58,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async({ email, password, name, image }) => {
-    const imageFile = {image: image[0]}
+    const imageFile = await {image: image[0]}
     const resimage = await axios.post(image_hosting_url, imageFile, {
       headers: {
         "content-type": "multipart/form-data",

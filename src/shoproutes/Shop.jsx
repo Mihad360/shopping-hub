@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useGetShopQuery } from "../redux/baseapi/baseApi";
 import Shopcard from "./Shopcard";
+import Loading from "../components/Loading";
 
 const Shop = () => {
   // Retrieve the initial filter value from localStorage or default to "All"
@@ -16,6 +17,10 @@ const Shop = () => {
     shopData === "All"
       ? shop
       : shop?.filter((item) => item.category.includes(shopData));
+
+      if(isLoading){
+        return <Loading></Loading>
+      }
   
   return (
     <div className="pt-24 max-w-[1400px] mx-auto">

@@ -6,6 +6,7 @@ import {
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Bounce, toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 const Cart = () => {
   const { email } = useSelector((state) => state.userSlice.user);
@@ -47,9 +48,7 @@ const Cart = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-500"></div>
-      </div>
+      <Loading></Loading>
     );
   }
 
@@ -69,10 +68,10 @@ const Cart = () => {
               Total Price:{" "}
               <span className="text-amber-600">{totalPrice} TK</span>
             </p>
-            {data?.length ? (
-              <Link to="/dashboard/payment">
+            {data?.length > 0 ? (
+              <Link to="/dashboard/checkout">
                 <button className="bg-green-600 px-6 py-2 text-white text-lg font-semibold rounded-md hover:bg-green-700 transition duration-300">
-                  Pay
+                  Checkout
                 </button>
               </Link>
             ) : (
@@ -80,7 +79,7 @@ const Cart = () => {
                 disabled
                 className="bg-green-300 px-6 py-2 text-white text-lg font-semibold rounded-md cursor-not-allowed"
               >
-                Pay
+                Checkout
               </button>
             )}
           </div>

@@ -15,6 +15,11 @@ import Adminroute from "../adminRoutes/Adminroute";
 import EditShopitem from "../adminRoutes/EditShopitem";
 import AddNewArrival from "../adminRoutes/Addnewarrival";
 import ManageNewarrival from "../adminRoutes/ManageNewarrival";
+import Payment from "../UserRoutes/Payment";
+import Success from "../redirectPages/Success";
+import Failed from "../redirectPages/Failed";
+import Cancel from "../redirectPages/Cancel";
+import Paymenthistory from "../UserRoutes/Paymenthistory";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +50,7 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup></Signup>,
       },
+      
     ],
   },
   {
@@ -86,6 +92,26 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/managenewarrival",
         element: <ManageNewarrival></ManageNewarrival>,
+      },
+      {
+        path: "/dashboard/checkout",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "/dashboard/checkouthistory",
+        element: <Paymenthistory></Paymenthistory>,
+      },
+      {
+        path: "/dashboard/success",
+        element: <Success></Success>,
+      },
+      {
+        path: "/dashboard/failed",
+        element: <Failed></Failed>,
+      },
+      {
+        path: "/dashboard/cancel",
+        element: <Cancel></Cancel>,
       },
     ],
   },

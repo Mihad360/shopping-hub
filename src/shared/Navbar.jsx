@@ -123,11 +123,11 @@ const Navbar = () => {
           )}
           {/* Profile Dropdown */}
           <div className="relative inline-block text-left" ref={dropdownRef}>
-            <p
+            <button
               onClick={toggleDropdown}
               className="flex items-center cursor-pointer text-gray-600 hover:text-green-400"
             >
-              {email ? (
+              {email && image ? (
                 <img
                   className="w-12 h-12 rounded-full"
                   src={image}
@@ -136,7 +136,7 @@ const Navbar = () => {
               ) : (
                 <CgProfile className="text-3xl" />
               )}
-            </p>
+            </button>
 
             {/* Dropdown Content */}
             {isdrop && (
@@ -150,7 +150,7 @@ const Navbar = () => {
                 <div>
                   {
                     email ? <div className="bg-green-500 text-center rounded-lg p-2 mx-3">
-                      <img className="w-16 h-16 rounded-full mx-auto" src={image} alt="" />
+                      <img className="w-16 h-16 rounded-full mx-auto" src={image} alt={image} />
                     <h1 className="text-lg text-white font-semibold">{name}</h1>
                     <p className="text-base underline">{email}</p>
                   </div> : ""

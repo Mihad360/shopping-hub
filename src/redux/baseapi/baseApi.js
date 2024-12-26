@@ -136,6 +136,9 @@ const shopapi = createApi({
         method: 'DELETE'
       }),
       invalidatesTags: ["User"],
+    }),
+    getPaymentList: builder.query({
+      query: (email) => `/checkout-list?email=${email}`,
     })
   }),
 });
@@ -158,6 +161,7 @@ export const {
   useUpdateShopItemMutation,
   useAddNewArrivalMutation,
   useUpdateStatusMutation,
+  useGetPaymentListQuery,
 } = shopapi;
 
 export default shopapi;
