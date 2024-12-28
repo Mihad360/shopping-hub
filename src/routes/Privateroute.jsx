@@ -11,8 +11,8 @@ import Loading from "../components/Loading";
 const Privateroute = ({ children }) => {
   const { pathname } = useLocation();
   const { email, isLoading } = useSelector((state) => state.userSlice.user);
-  const [saveJwt, { data }] = useSaveJwtMutation();
-  const dispatch = useDispatch();
+  // const [saveJwt, { data }] = useSaveJwtMutation();
+  // const dispatch = useDispatch();
   console.log(email, isLoading);
 
   // useEffect(() => {

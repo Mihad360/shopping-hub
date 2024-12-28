@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useAddItemMutation } from "../redux/baseapi/baseApi";
 import { Bounce, toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from 'uuid';
 
 const AddItem = () => {
   const [addItem] = useAddItemMutation();
@@ -15,6 +16,7 @@ const AddItem = () => {
 
   const onSubmit = (data) => {
     const shop = {
+      id: uuidv4(),
       title: data.title,
       image: data.image,
       category: data.category,

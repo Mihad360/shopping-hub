@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
 const BaseQueryWithLogout = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error && [401, 403, 404].includes(result.error.status)) {
+  if (result?.error && [401, 403, 404].includes(result.error.status)) {
     console.log(result);
     await signOut(auth)
     await api.dispatch(setLogout())
@@ -139,7 +139,13 @@ const shopapi = createApi({
     }),
     getPaymentList: builder.query({
       query: (email) => `/checkout-list?email=${email}`,
-    })
+    }),
+    getAdminstats: builder.query({
+      query: () => "/admin-stats"
+    }),
+    getOrderstats: builder.query({
+      query: () => "/order-stats"
+    }),
   }),
 });
 
@@ -162,6 +168,8 @@ export const {
   useAddNewArrivalMutation,
   useUpdateStatusMutation,
   useGetPaymentListQuery,
+  useGetAdminstatsQuery,
+  useGetOrderstatsQuery,
 } = shopapi;
 
 export default shopapi;

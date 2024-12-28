@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useAddCartMutation } from "../redux/baseapi/baseApi";
 
 const Shopcard = ({ item }) => {
-  const { title, description, price, category, image, discount } = item;
+  const { title, description, price,_id,id, category, image, discount } = item;
   const navigate = useNavigate();
   const [addCart, { isLoading: loading }] = useAddCartMutation();
   const { email, isLoading } = useSelector((state) => state.userSlice.user);
@@ -20,6 +20,8 @@ const Shopcard = ({ item }) => {
   const addToCart = async () => {
     if (email && !isLoading) {
       const cartInfo = {
+        shopId: id ,
+        shop_Id: _id,
         email: email,
         title,
         image,

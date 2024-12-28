@@ -24,7 +24,10 @@ const PaymentForm = () => {
       address: data.address,
       totalPrice: totalPrice,
       date: data.checkoutDate,
-      phone: data.phone
+      phone: data.phone,
+      cartId: cartData.map(item => item._id),
+      shopitems_Id: cartData.map(item => item.shop_Id),
+      shopitemsId: cartData.map(item => item.shopId)
     };
     console.log(checkoutInfo);
     axios

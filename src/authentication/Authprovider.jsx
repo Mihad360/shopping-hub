@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setLoading(true));
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      dispatch(setLoading(true));
       console.log(currentUser);
         if (currentUser) {
           await dispatch(

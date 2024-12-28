@@ -7,15 +7,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import auth from "../firebase/firebase.config";
 import { setLogout } from "../redux/features/userSlice";
-import { useGetCartQuery } from "../redux/baseapi/baseApi";
+import { useGetCartQuery, useGetIsAdminQuery } from "../redux/baseapi/baseApi";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isdrop, setIsDrop] = useState(false);
   const dropdownRef = useRef(null);
   const { email, image, name } = useSelector((state) => state.userSlice.user);
+  const { token } = useSelector((state) => state.userSlice.token);
   const { data } = useGetCartQuery(email);
   const dispatch = useDispatch();
+  console.log(email);
+  const {data: isAdmin} = useGetIsAdminQuery(email)
+  console.log(isAdmin?.admin);
 
   const handleLogout = () => {
     signOut(auth);
@@ -53,7 +57,10 @@ const Navbar = () => {
 
         {/* Hamburger Icon for Mobile */}
         <div className="md:hidden">
-          <button onClick={toggleMenu} className="focus:outline-none text-white">
+          <button
+            onClick={toggleMenu}
+            className="focus:outline-none text-white"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
@@ -89,14 +96,33 @@ const Navbar = () => {
           >
             Shop
           </NavLink>
-          <NavLink
+          {email && token && isAdmin?.admin ? (
+            <NavLink
+              to="/dashboard/adminhome"
+              className={({ isActive }) =>
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
+              }
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
+              }
+            >
+              Dashboard
+            </NavLink>
+          )}
+          {/* <NavLink
             to="/dashboard"
             className={({ isActive }) =>
               isActive ? "text-green-500 font-bold" : "hover:text-green-400"
             }
           >
             Dashboard
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to="/contactus"
             className={({ isActive }) =>
@@ -148,13 +174,16 @@ const Navbar = () => {
                   />
                 </div>
                 <div>
-                  {
-                    email ? <div className="bg-green-500 text-center rounded-lg p-2 mx-3">
-                      <img className="w-16 h-16 rounded-full mx-auto" src={image} alt={image} />
-                    <h1 className="text-lg text-white font-semibold">{name}</h1>
-                    <p className="text-base underline">{email}</p>
-                  </div> : ""
-                  }
+                  {email ? (
+                    <div className="bg-green-500 text-center rounded-lg p-2 mx-3">
+                      <h1 className="text-lg text-white font-semibold">
+                        {name}
+                      </h1>
+                      <p className="text-base underline">{email}</p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <ul className="py-1">
                   <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right">

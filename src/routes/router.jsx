@@ -20,6 +20,8 @@ import Success from "../redirectPages/Success";
 import Failed from "../redirectPages/Failed";
 import Cancel from "../redirectPages/Cancel";
 import Paymenthistory from "../UserRoutes/Paymenthistory";
+import Userhome from "../UserRoutes/Userhome";
+import Adminhome from "../adminRoutes/Adminhome";
 
 const router = createBrowserRouter([
   {
@@ -50,12 +52,15 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup></Signup>,
       },
-      
     ],
   },
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <Privateroute>
+        <Dashboard></Dashboard>
+      </Privateroute>
+    ),
     children: [
       {
         path: "/dashboard/cart",
@@ -100,6 +105,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/checkouthistory",
         element: <Paymenthistory></Paymenthistory>,
+      },
+      {
+        path: "/dashboard/userhome",
+        element: <Userhome></Userhome>,
+      },
+      {
+        path: "/dashboard/adminhome",
+        element: <Adminhome></Adminhome>,
       },
       {
         path: "/dashboard/success",

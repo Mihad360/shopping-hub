@@ -67,32 +67,32 @@ const Signin = () => {
   } = useForm();
   const onSubmit = async ({ email, password }) => {
     console.log(email, password);
-    const res = await dispatch(
+    const res = dispatch(
       createSignin({
         email,
         password,
       })
     );
-    // console.log(res.meta.requestStatus);
-    if(res?.meta.requestStatus === "fulfilled"){
+    console.log(res);
       const userInfo = { email: email };
       const response = await saveJwt(userInfo);
       console.log(response);
       if (response?.data?.token) {
         localStorage.setItem("access-token", response.data.token);
         // const accessToken = localStorage.getItem("access-token")
-        dispatch(
+        const dis = dispatch(
           setToken({
             token: response.data.token,
           })
         );
+        const gettoken = localStorage.getItem('access-token')
+        if(gettoken){
+          navigate('/')
+        }
         // dispatch(setLoading(false));
         // navigate("/");
-        window.location.href = "/";
+        // window.location.href = "/";
       }
-    }else{
-      console.log(res?.error.message);
-    }
   };
 
   return (
