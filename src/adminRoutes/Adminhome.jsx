@@ -5,30 +5,36 @@ import { FaSitemap, FaUsers } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
 import { TbCoinTakaFilled } from "react-icons/tb";
 import Orderstats from "./Orderstats";
+import useAuth from "../hooks/useAuth";
 
 const Adminhome = () => {
-  const { name, email } = useSelector((state) => state.userSlice.user);
   const { data: adminStats = [], isLoading } = useGetAdminstatsQuery();
 
-  const { users, shopItems, orders, revenue } = adminStats;
+  const { users, shopItems, checkouts, revenue } = adminStats;
 
   if (isLoading) {
-    return <Loading></Loading>;
+    return <div className="mx-auto w-32 py-72">
+    <Loading></Loading>
+  </div>;
   }
 
   return (
-    <div className=" p-5">
+    <div className=" pt-4 pb-10">
       <div className="">
         {/* Header Section */}
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Welcome, {name}</h1>
+        {/* <div className="mb-6 te xt-center">
+          <h1 className="text-2xl font-bold text-gray-800">Welcome, {name}</h1>
           <p className="text-gray-600">Email: {email}</p>
-        </div>
-
+        </div> */}
+        <h1
+          className="text-2xl font-bold text-green-600 text-center pb-4"
+        >
+          Oder Stats
+        </h1>
         {/* Dashboard Stats */}
-        <div className="flex gap-5">
-          <div className="flex flex-col gap-4 w-64">
-            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+        <div className="">
+          <div className="flex justify-center gap-4 w-full pb-6">
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center w-56">
               <h2 className="text-xl font-semibold text-gray-800">
                 Total Users
               </h2>
@@ -38,7 +44,7 @@ const Adminhome = () => {
               </p>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center w-56">
               <h2 className="text-xl font-semibold text-gray-800">
                 Shop Items
               </h2>
@@ -48,25 +54,27 @@ const Adminhome = () => {
               </p>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center w-56">
               <h2 className="text-xl font-semibold text-gray-800">
-                Total Orders
+                Total Checkouts
               </h2>
               <p className="text-3xl flex items-center justify-center gap-5 font-bold text-[#2c69ed] mt-2">
                 <FaListCheck />
-                {orders}
+                {checkouts}
               </p>
             </div>
 
-            <div className="bg-white shadow-lg rounded-lg p-6 text-center">
-              <h2 className="text-xl font-semibold text-gray-800">Revenue</h2>
-              <p className="text-3xl flex items-center justify-center gap-5 font-bold text-[#f646cd] mt-2">
+            <div className="bg-white shadow-lg rounded-lg p-6 text-center w-60">
+              <h2 className="text-xl font-semibold text-gray-800">
+                Total Revenue
+              </h2>
+              <p className="text-2xl flex items-center justify-center gap-5 font-bold text-[#f646cd] mt-2">
                 <TbCoinTakaFilled />
                 {revenue} TK
               </p>
             </div>
           </div>
-          <div>
+          <div className="">
             <Orderstats></Orderstats>
           </div>
         </div>

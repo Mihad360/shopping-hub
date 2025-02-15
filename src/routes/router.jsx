@@ -7,7 +7,6 @@ import Contactus from "../contactus/Contactus";
 import Cart from "../UserRoutes/Cart";
 import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
-import Privateroute from "./Privateroute";
 import Allusers from "../adminRoutes/Allusers";
 import Additem from "../adminRoutes/Additem";
 import Manageitems from "../adminRoutes/Manageitems";
@@ -22,6 +21,7 @@ import Cancel from "../redirectPages/Cancel";
 import Paymenthistory from "../UserRoutes/Paymenthistory";
 import Userhome from "../UserRoutes/Userhome";
 import Adminhome from "../adminRoutes/Adminhome";
+import PrivateRoute from "../routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -39,9 +39,9 @@ const router = createBrowserRouter([
       {
         path: "/contactus",
         element: (
-          <Privateroute>
+          <PrivateRoute>
             <Contactus></Contactus>
-          </Privateroute>
+          </PrivateRoute>
         ),
       },
       {
@@ -57,14 +57,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <Privateroute>
+      <PrivateRoute>
         <Dashboard></Dashboard>
-      </Privateroute>
+      </PrivateRoute>
     ),
     children: [
       {
         path: "/dashboard/cart",
-        element: <Cart></Cart>,
+        element: (
+          <PrivateRoute>
+            <Cart></Cart>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/allusers",
@@ -84,35 +88,67 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/manageshopitems",
-        element: <Manageitems></Manageitems>,
+        element: (
+          <Adminroute>
+            <Manageitems></Manageitems>
+          </Adminroute>
+        ),
       },
       {
         path: "/dashboard/manageitems/edititems/:id",
-        element: <EditShopitem></EditShopitem>,
+        element: (
+          <Adminroute>
+            <EditShopitem></EditShopitem>
+          </Adminroute>
+        ),
       },
       {
         path: "/dashboard/addnewarrival",
-        element: <AddNewArrival></AddNewArrival>,
+        element: (
+          <Adminroute>
+            <AddNewArrival></AddNewArrival>
+          </Adminroute>
+        ),
       },
       {
         path: "/dashboard/managenewarrival",
-        element: <ManageNewarrival></ManageNewarrival>,
+        element: (
+          <Adminroute>
+            <ManageNewarrival></ManageNewarrival>
+          </Adminroute>
+        ),
       },
       {
         path: "/dashboard/checkout",
-        element: <Payment></Payment>,
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/checkouthistory",
-        element: <Paymenthistory></Paymenthistory>,
+        element: (
+          <PrivateRoute>
+            <Paymenthistory></Paymenthistory>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/userhome",
-        element: <Userhome></Userhome>,
+        element: (
+          <PrivateRoute>
+            <Userhome></Userhome>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/adminhome",
-        element: <Adminhome></Adminhome>,
+        element: (
+          <Adminroute>
+            <Adminhome></Adminhome>
+          </Adminroute>
+        ),
       },
       {
         path: "/dashboard/success",

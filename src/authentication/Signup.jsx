@@ -1,104 +1,61 @@
-import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { createUser, setToken, setUser} from "../redux/features/userSlice";
-import { useAddUserMutation, useSaveJwtMutation } from "../redux/baseapi/baseApi";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import auth from "../firebase/firebase.config";
+import useAuth from "../hooks/useAuth";
+import { useAddUserMutation } from "../redux/baseapi/baseApi";
+import { useForm } from "react-hook-form";
 import axios from "axios";
+import { updateProfile } from "firebase/auth";
+import { Bounce, toast } from "react-toastify";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Signup = () => {
-  const navigate = useNavigate()
-  const [saveJwt] = useSaveJwtMutation();
-  // const {email, isLoading} = useSelector(state => state.userSlice.user)
-  const [addUser] = useAddUserMutation()
-  const googleProvider = new GoogleAuthProvider()
-  const dispatch = useDispatch();
-
-  const handleGoogle = async () => {
-    const res = await signInWithPopup(auth, googleProvider)
-    console.log(res.user);
-    if(res?.user){
-      await dispatch(setUser({
-        email: res.user.email,
-        name: res.user.displayName
-      }))
-      const userInfo = {
-        name: res.user.displayName,
-        email: res.user.email,
-      }
-      await addUser(userInfo)
-      const user = { email: res.user.email };
-      console.log(user);
-      const response = await saveJwt(user);
-      console.log(response);
-      if (response?.data?.token) {
-        localStorage.setItem("access-token", response.data.token);
-        // const accessToken = localStorage.getItem("access-token")
-        dispatch(
-          setToken({
-            token: response.data.token,
-          })
-        );
-        // dispatch(setLoading(false));
-        // navigate("/");
-        window.location.href = "/";
-      }
-    }
-  }
+  const [addUser] = useAddUserMutation();
+  const { createUser } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = async({ email, password, name, image }) => {
-    const imageFile = await {image: image[0]}
-    const resimage = await axios.post(image_hosting_url, imageFile, {
+
+  const onSubmit = async (data) => {
+    const imageFile = { image: data?.image[0] };
+    const responseImage = await axios.post(image_hosting_url, imageFile, {
       headers: {
         "content-type": "multipart/form-data",
       },
-    })
-    const profilePhoto = await resimage?.data.data.display_url;
-    console.log(profilePhoto);
-    await dispatch(
-      createUser({
-        email,
-        password,
-        name,
-        image: profilePhoto,
-      })
-    );
+    });
+    const imageUrl = await responseImage?.data?.data?.display_url;
+    await createUser(data.email, data.password).then(async (res) => {
+      await updateProfile(res.user, {
+        displayName: data.name,
+        photoURL: imageUrl,
+      });
+    });
     const userInfo = {
-      name: name,
-      email: email,
-    }
-    const res = await addUser(userInfo)
-    if(res?.data?.insertedId){
-      const user = { email: email };
-      const response = await saveJwt(user);
-      console.log(response);
-      if (response?.data?.token) {
-        localStorage.setItem("access-token", response.data.token);
-        // const accessToken = localStorage.getItem("access-token")
-        dispatch(
-          setToken({
-            token: response.data.token,
-          })
-        );
-        // reset()
-        // dispatch(setLoading(false));
-        // navigate("/");
-        window.location.href = "/";
-      }
+      name: data.name,
+      email: data.email,
+      imageURL: imageUrl,
+    };
+    const res = await addUser(userInfo);
+    if (res?.data.insertedId) {
+      toast("✔️ You are Signed Upped", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      await navigate("/");
+      window.location.reload();
     }
   };
-
   return (
     <div>
       <div className="pt-12 lg:pt-16">
@@ -192,12 +149,15 @@ const Signup = () => {
                   </button>
                 </div>
               </form>
-              <div className="mx-auto pb-7">
-                <button onClick={handleGoogle} className="text-lg lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center">
+              {/* <div className="mx-auto pb-7">
+                <button
+                  onClick={handleGoogle}
+                  className="text-lg lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center"
+                >
                   <FcGoogle />{" "}
                   <p className="text-lg text-black">SignUp with Google</p>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -72,11 +72,13 @@ const Allusers = () => {
     });
   };
 
-  // if (isLoading) {
-  //   return (
-  //     <Loading></Loading>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-32 py-72">
+        <Loading></Loading>
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 py-6">

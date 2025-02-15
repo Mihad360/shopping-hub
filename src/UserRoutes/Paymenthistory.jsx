@@ -1,14 +1,16 @@
-import { useSelector } from "react-redux";
 import { useGetPaymentListQuery } from "../redux/baseapi/baseApi";
 import Loading from "../components/Loading";
+import useAuth from "../hooks/useAuth";
 
 const PaymentHistory = () => {
-  const { email } = useSelector((state) => state.userSlice.user);
-  const { data, isLoading, isError } = useGetPaymentListQuery(email);
+  const {user} = useAuth()
+  const { data, isLoading, isError } = useGetPaymentListQuery(user?.email);
 
   if (isLoading) {
     return (
-      <Loading></Loading>
+      <div className="mx-auto w-32 py-72">
+        <Loading></Loading>
+      </div>
     );
   }
 

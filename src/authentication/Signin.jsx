@@ -1,98 +1,36 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
-import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  createSignin,
-  setLoading,
-  setToken,
-  setUser,
-} from "../redux/features/userSlice";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import auth from "../firebase/firebase.config";
-import {
-  useAddUserMutation,
-  useSaveJwtMutation,
-} from "../redux/baseapi/baseApi";
+import useAuth from "../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import { Bounce, toast } from "react-toastify";
 
 const Signin = () => {
+  const { createSignIn } = useAuth();
   const navigate = useNavigate();
-  const { email, isLoading } = useSelector((state) => state.userSlice.user);
-  const [saveJwt] = useSaveJwtMutation();
-  const [addUser] = useAddUserMutation();
-  const googleProvider = new GoogleAuthProvider();
-  const dispatch = useDispatch();
-  const from = location.state?.from?.pathname || "/";
-
-  const handleGoogle = async () => {
-    const res = await signInWithPopup(auth, googleProvider);
-    console.log(res.user);
-    if (res?.user) {
-      await dispatch(
-        setUser({
-          email: res.user.email,
-          name: res.user.displayName,
-        })
-      );
-      const userInfo = {
-        name: res.user.displayName,
-        email: res.user.email,
-      };
-      await addUser(userInfo);
-      const user = { email: res.user.email };
-      console.log(user);
-      const response = await saveJwt(user);
-      console.log(response);
-      if (response?.data?.token) {
-        localStorage.setItem("access-token", response.data.token);
-        // const accessToken = localStorage.getItem("access-token")
-        dispatch(
-          setToken({
-            token: response.data.token,
-          })
-        );
-        // dispatch(setLoading(false));
-        // navigate(from, { replace: true });
-        window.location.href = "/";
-      }
-    }
-  };
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = async ({ email, password }) => {
-    console.log(email, password);
-    const res = dispatch(
-      createSignin({
-        email,
-        password,
-      })
-    );
-    console.log(res);
-      const userInfo = { email: email };
-      const response = await saveJwt(userInfo);
-      console.log(response);
-      if (response?.data?.token) {
-        localStorage.setItem("access-token", response.data.token);
-        // const accessToken = localStorage.getItem("access-token")
-        const dis = dispatch(
-          setToken({
-            token: response.data.token,
-          })
-        );
-        const gettoken = localStorage.getItem('access-token')
-        if(gettoken){
-          navigate('/')
-        }
-        // dispatch(setLoading(false));
-        // navigate("/");
-        // window.location.href = "/";
-      }
+
+  const onSubmit = async (data) => {
+    await createSignIn(data.email, data.password).then(async () => {
+      toast("✔️ You are Signed In", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      await navigate("/");
+      // window.location.reload();
+    });
   };
 
   return (
@@ -153,7 +91,7 @@ const Signin = () => {
                   </button>
                 </div>
               </form>
-              <div className="mx-auto pb-7">
+              {/* <div className="mx-auto pb-7">
                 <button
                   onClick={handleGoogle}
                   className="text-xl lg:text-3xl btn bg-gray-300 hover:bg-gray-100 mx-auto text-white flex items-center"
@@ -161,7 +99,7 @@ const Signin = () => {
                   <FcGoogle />{" "}
                   <p className="text-lg text-black">Login with Google</p>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

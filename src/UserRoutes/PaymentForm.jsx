@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { useGetCartQuery } from "../redux/baseapi/baseApi";
 import moment from "moment/moment";
+import useAuth from "../hooks/useAuth";
 
 const PaymentForm = () => {
-  const { name, email } = useSelector((state) => state.userSlice.user);
-  const { data: cartData = [] } = useGetCartQuery(email);
+  const { user } = useAuth();
+  const { data: cartData = [] } = useGetCartQuery(user?.email);
 
   const totalPrice = cartData.reduce((total, item) => total + item.price, 0);
   const presentDate = moment().format("MMM Do YYYY h:mm:ss a");
@@ -25,13 +25,13 @@ const PaymentForm = () => {
       totalPrice: totalPrice,
       date: data.checkoutDate,
       phone: data.phone,
-      cartId: cartData.map(item => item._id),
-      shopitems_Id: cartData.map(item => item.shop_Id),
-      shopitemsId: cartData.map(item => item.shopId)
+      cartId: cartData.map((item) => item._id),
+      shopitems_Id: cartData.map((item) => item.shop_Id),
+      shopitemsId: cartData.map((item) => item.shopId),
     };
     console.log(checkoutInfo);
     axios
-      .post("http://localhost:5000/create-checkout", {
+      .post("https://shopping-hub-server.vercel.app/create-checkout", {
         checkoutInfo,
       })
       .then((res) => {
@@ -47,7 +47,9 @@ const PaymentForm = () => {
       <h2 className="text-3xl font-bold mb-5 text-green-600 text-center">
         Checkout Details
       </h2>
-      <p className="text-red-500 pb-5 font-medium">Note: You can replace the default values by your own information</p>
+      <p className="text-red-500 pb-5 font-medium">
+        Note: You can replace the Name
+      </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name Field */}
@@ -59,7 +61,7 @@ const PaymentForm = () => {
               Name
             </label>
             <input
-              defaultValue={name}
+              defaultValue={user.displayName}
               type="text"
               id="name"
               {...register("name", { required: "Name is required" })}
@@ -82,7 +84,7 @@ const PaymentForm = () => {
               Email
             </label>
             <input
-              defaultValue={email}
+              defaultValue={user?.email}
               readOnly
               type="email"
               id="email"
@@ -201,7 +203,7 @@ const PaymentForm = () => {
 
         {/* Submit Button */}
         <button
-        disabled={cartData?.length === 0}
+          disabled={cartData?.length === 0}
           type="submit"
           className="w-full mt-6 bg-green-600 text-white py-3 px-5 rounded-md text-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
         >

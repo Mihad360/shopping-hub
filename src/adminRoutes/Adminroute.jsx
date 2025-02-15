@@ -1,24 +1,27 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetIsAdminQuery } from "../redux/baseapi/baseApi";
 import Loading from "../components/Loading";
+import useAuth from "../hooks/useAuth";
 
-const Adminroute = ({children}) => {
+const Adminroute = ({ children }) => {
+  const { user, loading } = useAuth();
+  const { data: isAdmin, isLoading } = useGetIsAdminQuery(user?.email);
+  const location = useLocation();
+  console.log(user?.email, isAdmin);
 
-    const {email, isLoading} = useSelector(state => state.userSlice.user)
-    const {data: isAdmin, isLoading: loading} = useGetIsAdminQuery(email)
-    const location = useLocation()
-    console.log(email, isAdmin);
+  if (isLoading || loading) {
+    return (
+      <div className="text-center py-72">
+        <Loading></Loading>
+      </div>
+    );
+  }
 
-    if(isLoading || loading){
-        return <Loading></Loading>
-    }
+  if (user?.email && isAdmin?.admin) {
+    return children;
+  }
 
-    if(email && isAdmin?.admin){
-        return children
-    }
-
-    return <Navigate to="/"  state={{from: location}}></Navigate>
+  return <Navigate to="/" state={{ from: location }}></Navigate>;
 };
 
 export default Adminroute;

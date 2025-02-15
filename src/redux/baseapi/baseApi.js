@@ -1,38 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setLogout } from "../features/userSlice";
-import { signOut } from "firebase/auth";
-import auth from "../../firebase/firebase.config";
-
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000",
+  baseUrl: "https://shopping-hub-server.vercel.app",
   prepareHeaders: (headers) => {
     const token = localStorage.getItem("access-token");
     if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
   },
 });
 
-const BaseQueryWithLogout = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
-
-  if (result?.error && [401, 403, 404].includes(result.error.status)) {
-    console.log(result);
-    await signOut(auth)
-    await api.dispatch(setLogout())
-    await localStorage.removeItem("access-token");
-    window.location.href = "/signin";
-  }
-
-  return result;
-};
-
 const shopapi = createApi({
   reducerPath: "api",
-  baseQuery: BaseQueryWithLogout,
-  tagTypes: ["Cart", "User", "Shop"],
+  baseQuery: baseQuery,
+  tagTypes: ["Cart", "User", "Shop", "NewArrival", "Stats"],
   endpoints: (builder) => ({
     getShop: builder.query({
       query: () => "/shop",
@@ -40,16 +22,16 @@ const shopapi = createApi({
     }),
     addItem: builder.mutation({
       query: (data) => ({
-        url: '/shop',
-        method: 'POST',
-        body: data
+        url: "/shop",
+        method: "POST",
+        body: data,
       }),
       invalidatesTags: ["Shop"],
     }),
     deleteShopItem: builder.mutation({
       query: (id) => ({
         url: `/shop/${id}`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
       invalidatesTags: ["Shop"],
     }),
@@ -58,10 +40,10 @@ const shopapi = createApi({
       providesTags: ["Shop"],
     }),
     updateShopItem: builder.mutation({
-      query: ({id, ...item}) => ({
+      query: ({ id, ...item }) => ({
         url: `/shop/${id}`,
-        method: 'PATCH',
-        body: item
+        method: "PATCH",
+        body: item,
       }),
       invalidatesTags: ["Shop"],
     }),
@@ -112,39 +94,49 @@ const shopapi = createApi({
     }),
     getNewArrival: builder.query({
       query: () => "/newarrival",
+      providesTags: ["NewArrival"], // Added tag
     }),
     addNewArrival: builder.mutation({
       query: (data) => ({
-        url: '/newarrival',
-        method: 'POST',
-        body: data
-      })
+        url: "/newarrival",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["NewArrival"], // Added tag
     }),
     updateStatus: builder.mutation({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         url: `/newarrival/${id}`,
-        method: 'PATCH',
-        body: data
-      })
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["NewArrival"], // Added tag
     }),
     getIsAdmin: builder.query({
-      query: (email) => `/users/admin/${email}`
+      query: (email) => `/users/admin/${email}`,
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/users/${id}`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
       invalidatesTags: ["User"],
     }),
     getPaymentList: builder.query({
       query: (email) => `/checkout-list?email=${email}`,
+      providesTags: ["Stats"],
     }),
     getAdminstats: builder.query({
-      query: () => "/admin-stats"
+      query: () => "/admin-stats",
+      providesTags: ["Stats"],
     }),
     getOrderstats: builder.query({
-      query: () => "/order-stats"
+      query: () => "/order-stats",
+      providesTags: ["Stats"],
+    }),
+    getUserstats: builder.query({
+      query: () => "/user-stats",
+      providesTags: ["Stats"],
     }),
   }),
 });
@@ -170,6 +162,7 @@ export const {
   useGetPaymentListQuery,
   useGetAdminstatsQuery,
   useGetOrderstatsQuery,
+  useGetUserstatsQuery,
 } = shopapi;
 
 export default shopapi;

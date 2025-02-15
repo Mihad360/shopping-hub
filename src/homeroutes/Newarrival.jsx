@@ -8,7 +8,9 @@ const NewArrivals = () => {
 
   if (isLoading) {
     return (
-      <Loading></Loading>
+      <div className="mx-auto w-32 py-72">
+        <Loading></Loading>
+      </div>
     );
   }
 
@@ -24,7 +26,7 @@ const NewArrivals = () => {
   }
 
   return (
-    <section className="bg-gradient-to-r from-green-50 to-emerald-50 py-16">
+    <section className="py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-green-800">
           New Arrivals

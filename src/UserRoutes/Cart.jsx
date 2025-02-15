@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+
 import {
   useDeleteCartMutation,
   useGetCartQuery,
@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Bounce, toast } from "react-toastify";
 import Loading from "../components/Loading";
+import useAuth from "../hooks/useAuth";
 
 const Cart = () => {
-  const { email } = useSelector((state) => state.userSlice.user);
-  const { data, isLoading } = useGetCartQuery(email);
+  const {user} = useAuth()
+  const { data, isLoading } = useGetCartQuery(user?.email);
   const [deleteCart] = useDeleteCartMutation();
   const totalPrice = data?.reduce(
     (total, nextPrice) => total + nextPrice.price,
@@ -48,7 +49,9 @@ const Cart = () => {
 
   if (isLoading) {
     return (
-      <Loading></Loading>
+      <div className="mx-auto w-32 py-72">
+        <Loading></Loading>
+      </div>
     );
   }
 

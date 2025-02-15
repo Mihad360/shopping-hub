@@ -1,29 +1,23 @@
-import { signOut } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaShopify } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import auth from "../firebase/firebase.config";
-import { setLogout } from "../redux/features/userSlice";
 import { useGetCartQuery, useGetIsAdminQuery } from "../redux/baseapi/baseApi";
+import useAuth from "../hooks/useAuth";
+import { LogOut } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isdrop, setIsDrop] = useState(false);
+  const { user, logout } = useAuth();
   const dropdownRef = useRef(null);
-  const { email, image, name } = useSelector((state) => state.userSlice.user);
-  const { token } = useSelector((state) => state.userSlice.token);
-  const { data } = useGetCartQuery(email);
-  const dispatch = useDispatch();
-  console.log(email);
-  const {data: isAdmin} = useGetIsAdminQuery(email)
+  const { data } = useGetCartQuery(user?.email);
+  const { data: isAdmin } = useGetIsAdminQuery(user?.email);
   console.log(isAdmin?.admin);
 
-  const handleLogout = () => {
-    signOut(auth);
-    dispatch(setLogout());
+  const handleLogout = async () => {
+    await logout();
   };
 
   const toggleDropdown = () => {
@@ -96,7 +90,19 @@ const Navbar = () => {
           >
             Shop
           </NavLink>
-          {email && token && isAdmin?.admin ? (
+          {user && !isAdmin?.admin ? (
+            <NavLink
+              to="/dashboard/userhome"
+              className={({ isActive }) =>
+                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
+              }
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            ""
+          )}
+          {user && isAdmin?.admin ? (
             <NavLink
               to="/dashboard/adminhome"
               className={({ isActive }) =>
@@ -106,23 +112,8 @@ const Navbar = () => {
               Dashboard
             </NavLink>
           ) : (
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                isActive ? "text-green-500 font-bold" : "hover:text-green-400"
-              }
-            >
-              Dashboard
-            </NavLink>
+            ""
           )}
-          {/* <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive ? "text-green-500 font-bold" : "hover:text-green-400"
-            }
-          >
-            Dashboard
-          </NavLink> */}
           <NavLink
             to="/contactus"
             className={({ isActive }) =>
@@ -142,64 +133,31 @@ const Navbar = () => {
               </p>
             </NavLink>
           </p>
-          {!email && (
+          {!user && (
             <Link to="/signin" className="hover:text-green-400 hover:underline">
               Sign In
             </Link>
           )}
           {/* Profile Dropdown */}
-          <div className="relative inline-block text-left" ref={dropdownRef}>
-            <button
-              onClick={toggleDropdown}
-              className="flex items-center cursor-pointer text-gray-600 hover:text-green-400"
-            >
-              {email && image ? (
-                <img
-                  className="w-12 h-12 rounded-full"
-                  src={image}
-                  alt="Profile"
-                />
-              ) : (
-                <CgProfile className="text-3xl" />
-              )}
-            </button>
-
-            {/* Dropdown Content */}
-            {isdrop && (
-              <div className="absolute right-0 mt-2 min-w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                <div className="flex justify-end p-2">
-                  <AiOutlineClose
-                    onClick={() => setIsDrop(false)}
-                    className="text-gray-500 cursor-pointer hover:text-gray-700"
-                  />
-                </div>
-                <div>
-                  {email ? (
-                    <div className="bg-green-500 text-center rounded-lg p-2 mx-3">
-                      <h1 className="text-lg text-white font-semibold">
-                        {name}
-                      </h1>
-                      <p className="text-base underline">{email}</p>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <ul className="py-1">
-                  <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right">
-                    <li>Profile</li>
-                  </button>
-                  <button className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right">
-                    <li>Settings</li>
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="hover:bg-green-100 px-4 py-2 cursor-pointer text-gray-700 w-full text-right"
-                  >
-                    <li>Logout</li>
-                  </button>
-                </ul>
-              </div>
+          <div className="flex items-center gap-4">
+            {user ? (
+              <img
+                className="w-12 h-12 rounded-[100%]"
+                src={user?.photoURL}
+                alt={user?.displayName}
+              />
+            ) : (
+              <p className="text-3xl">
+                <CgProfile />
+              </p>
+            )}
+            {user && (
+              <button
+                onClick={handleLogout}
+                className="text-lg text-rose-500 font-medium flex items-center gap-2 hover:bg-slate-400 duration-300 transition-all rounded-xl px-3 py-1"
+              >
+                <LogOut /> Log Out
+              </button>
             )}
           </div>
         </div>

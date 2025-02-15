@@ -1,53 +1,75 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import auth from "../firebase/firebase.config";
-import { setLoading, setToken, setUser } from "../redux/features/userSlice";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import { app } from "../firebase/firebase.config";
 import { useSaveJwtMutation } from "../redux/baseapi/baseApi";
 
-const AuthProvider = ({ children }) => {
-  const [saveJwt, { data }] = useSaveJwtMutation();
-  const dispatch = useDispatch();
+export const AuthContext = createContext(null);
+const auth = getAuth(app);
+
+const Authprovider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const googleProvider = new GoogleAuthProvider();
+  const [addJwt] = useSaveJwtMutation();
+  // const axiosPublic = useAxiosPublic();
+
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const createSignIn = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
+
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      dispatch(setLoading(true));
+    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
       console.log(currentUser);
-        if (currentUser) {
-          await dispatch(
-            setUser({
-              name: currentUser.displayName || "",
-              email: currentUser.email,
-              image: currentUser.photoURL
-            })
-          );
-          dispatch(setLoading(false));
-          // const userInfo = { email: currentUser.email };
-          // const res = await saveJwt(userInfo);
-          // console.log(res);
-          // if (res?.data?.token) {
-          //   localStorage.setItem("access-token", res.data.token);
-          //   // const accessToken = localStorage.getItem("access-token")
-          //   dispatch(setToken({
-          //       token: res.data.token
-          //     }))
-          //   dispatch(setLoading(false));
-          // }
-        } else {
-          localStorage.removeItem("access-token");
-          dispatch(setToken({
-            token: ''
-          }))
-          dispatch(setLoading(false));
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        const res = await addJwt(userInfo);
+        if (res?.data.token) {
+          localStorage.setItem("access-token", res?.data.token);
+          setLoading(false);
         }
+      } else {
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
     });
-
     return () => {
-      return unsubscribe();
+      return unSubscribe();
     };
-  }, [dispatch,saveJwt]);
+  }, [addJwt]);
 
-  return children;
+  const authInfo = {
+    createUser,
+    createSignIn,
+    logout,
+    googleLogin,
+    user,
+    loading,
+  };
+
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
-export default AuthProvider;
+export default Authprovider;

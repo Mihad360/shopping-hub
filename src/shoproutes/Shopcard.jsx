@@ -1,15 +1,16 @@
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useAddCartMutation } from "../redux/baseapi/baseApi";
+import useAuth from "../hooks/useAuth";
 
 const Shopcard = ({ item }) => {
-  const { title, description, price,_id,id, category, image, discount } = item;
+  const { title, description, price, _id, id, category, image, discount } =
+    item;
   const navigate = useNavigate();
-  const [addCart, { isLoading: loading }] = useAddCartMutation();
-  const { email, isLoading } = useSelector((state) => state.userSlice.user);
+  const [addCart, { isLoading }] = useAddCartMutation();
+  const {user, loading} = useAuth()
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-600"></div>
@@ -18,11 +19,11 @@ const Shopcard = ({ item }) => {
   }
 
   const addToCart = async () => {
-    if (email && !isLoading) {
+    if (user?.email && !loading) {
       const cartInfo = {
-        shopId: id ,
+        shopId: id,
         shop_Id: _id,
-        email: email,
+        email: user?.email,
         title,
         image,
         description,

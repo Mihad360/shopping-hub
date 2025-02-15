@@ -1,151 +1,126 @@
+import { useGetOrderstatsQuery } from "../redux/baseapi/baseApi";
+import { Bar } from "react-chartjs-2";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
   Tooltip,
   Legend,
-} from "recharts";
-import { useGetAdminstatsQuery } from "../redux/baseapi/baseApi";
+} from "chart.js";
+import { Fence, Footprints, Shirt } from "lucide-react";
+import { GiArmoredPants, GiExplosiveMaterials } from "react-icons/gi";
+import { PiTShirtFill } from "react-icons/pi";
+
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Orderstats = () => {
-  const { data: adminStats = [] } = useGetAdminstatsQuery();
+  const { data: orderStats = [] } = useGetOrderstatsQuery();
+  console.log(orderStats);
 
-  const { users, shopItems, orders, revenue } = adminStats;
-
-  const chartData = [
-    { name: "Users", value: users },
-    { name: "Shop Items", value: shopItems },
-    { name: "Orders", value: orders },
-    { name: "Revenue", value: revenue },
-  ];
-
-  const getPath = (x, y, width, height) => {
-    return `M${x},${y + height}C${x + width / 3},${y + height} ${
-      x + width / 2
-    },${y + height / 3}
-    ${x + width / 2}, ${y}
-    C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${
-      x + width
-    }, ${y + height}
-    Z`;
-  };
-
-  const TriangleBar = (props) => {
-    const { fill, x, y, width, height } = props;
-
-    return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
-  };
-
+  const labels = orderStats?.map((order) => order.category);
+  const quantities = orderStats?.map((order) => order.quantity);
+  const revenues = orderStats?.map((order) => order.revenue);
 
   return (
-    <div className="flex gap-6">
-      <div>
-        <BarChart
-          width={400}
-          height={300}
-          data={chartData}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis /> {/* Adjust Y-Axis */}
-          <Tooltip />
-          <Legend />
-          {/* Individual Bars for each data item */}
+    <div>
+      <div className="gap-5 px-5">
+        <div>
+          <div className="grid grid-cols-3 gap-4">
+            {orderStats?.map((item) => (
+              <div
+                key={item.category}
+                className="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-5 flex items-center gap-4 border border-gray-200 dark:border-gray-700"
+              >
+                <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-900">
+                  {item.category === "shoes" ? (
+                    <p>
+                      <Footprints className="w-8 h-8 text-red-500 dark:text-red-300" />
+                    </p>
+                  ) : item.category === "shirt" ? (
+                    <p>
+                      <Shirt className="w-8 h-8 text-green-500 dark:text-green-300" />
+                    </p>
+                  ) : item.category === "saree" ? (
+                    <p>
+                      <Fence className="w-8 h-8 text-yellow-500 dark:text-yellow-300" />
+                    </p>
+                  ) : item.category === "pants" ? (
+                    <p>
+                      <GiArmoredPants className="w-8 h-8 text-purple-500 dark:text-purple-300" />
+                    </p>
+                  ) : item.category === "t-shirt" ? (
+                    <p>
+                      <PiTShirtFill className="w-8 h-8 text-orange-500 dark:text-orange-300" />
+                    </p>
+                  ) : item.category === "three-pis" ? (
+                    <p>
+                      <GiExplosiveMaterials className="w-8 h-8 text-pink-500 dark:text-pink-300" />
+                    </p>
+                  ) : null}
+                </div>
+
+                <div>
+                  <h1 className="text-lg font-semibold text-gray-800 dark:text-gray-100 capitalize">
+                    {item.category}
+                  </h1>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    Quantity: {item.quantity}
+                  </p>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    Revenue:{" "}
+                    <span className="text-black font-semibold">
+                      {item.revenue} TK
+                    </span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="bg-white rounded-lg shadow-xl p-4 flex-1 mt-5">
           <Bar
-            label={{ position: "top" }}
-            dataKey="value"
-            name="Users"
-            data={[{ name: "Users", value: users }]}
-            fill="#ff582e"
+            className=""
+            data={{
+              labels,
+              datasets: [
+                {
+                  label: "Quantity",
+                  data: quantities,
+                  backgroundColor: "rgba(70, 255, 177 )", // Blue
+                  borderRadius: 5,
+                  stack: "Stack 0",
+                },
+                {
+                  label: "Revenue",
+                  data: revenues,
+                  backgroundColor: "rgba(70, 255, 177 )", // Yellow
+                  borderRadius: 5,
+                  stack: "Stack 0",
+                },
+              ],
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { position: "top" },
+                title: { display: true, text: "Order Statistics" },
+              },
+              scales: {
+                x: { stacked: true },
+                y: { stacked: true },
+              },
+            }}
           />
-        </BarChart>
-        <BarChart
-          width={400}
-          height={300}
-          data={chartData}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis /> {/* Adjust Y-Axis */}
-          <Tooltip />
-          <Legend />
-          {/* Individual Bars for each data item */}
-          <Bar
-            shape={TriangleBar}
-            label={{ position: "top" }}
-            dataKey="value"
-            name="Revenue"
-            data={[{ name: "Revenue", value: revenue }]}
-            fill="#f646cd"
-          />
-        </BarChart>
-      </div>
-      <div>
-        <BarChart
-          width={400}
-          height={300}
-          data={chartData}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis /> {/* Adjust Y-Axis */}
-          <Tooltip />
-          <Legend />
-          {/* Individual Bars for each data item */}
-          <Bar
-            shape={TriangleBar}
-            label={{ position: "top" }}
-            dataKey="value"
-            name="Shop Items"
-            data={[{ name: "Shop Items", value: shopItems }]}
-            fill="#ed9b2c"
-          />
-        </BarChart>
-        <BarChart
-          width={400}
-          height={300}
-          data={chartData}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis /> {/* Adjust Y-Axis */}
-          <Tooltip />
-          <Legend />
-          {/* Individual Bars for each data item */}
-          <Bar
-            label={{ position: "top" }}
-            dataKey="value"
-            name="Orders"
-            data={[{ name: "Orders", value: orders }]}
-            fill="#2c69ed"
-          />
-        </BarChart>
+        </div>
       </div>
     </div>
   );

@@ -5,15 +5,20 @@ import { RiAdminFill, RiContactsBook3Fill } from "react-icons/ri";
 import { VscPreview } from "react-icons/vsc";
 import { NavLink } from "react-router-dom";
 import { useGetIsAdminQuery } from "../redux/baseapi/baseApi";
-import { useSelector } from "react-redux";
 import { useState } from "react";
 import { BiSolidDashboard } from "react-icons/bi";
+import useAuth from "../hooks/useAuth";
+import { LogOut } from "lucide-react";
 
 const Sidebar = () => {
   const [isAddItemsOpen, setIsAddItemsOpen] = useState(false);
   const [isManageItemsOpen, setIsManageItemsOpen] = useState(false);
-  const { email } = useSelector((state) => state.userSlice.user);
-  const { data: isAdmin } = useGetIsAdminQuery(email);
+  const { user, logout } = useAuth();
+  const { data: isAdmin } = useGetIsAdminQuery(user?.email);
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <div className=" h-full w-72 text-green-800 p-6">
@@ -192,7 +197,7 @@ const Sidebar = () => {
               <FaHistory className="mr-3 text-xl" />
               <span className="font-medium">Checkout History</span>
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/dashboard/reviews"
               className={({ isActive }) =>
                 `flex items-center p-3 rounded-lg transition-all duration-300 ${
@@ -204,11 +209,11 @@ const Sidebar = () => {
             >
               <VscPreview className="mr-3 text-xl" />
               <span className="font-medium">Reviews</span>
-            </NavLink>
+            </NavLink> */}
           </div>
         )}
       </div>
-      <div className="space-y-3 border-t-2 text-gray-900 border-green-300 pt-6">
+      <div className="space-y-3 border-t-2 text-gray-900 border-green-300 pt-6 pb-10">
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -248,6 +253,12 @@ const Sidebar = () => {
           <RiContactsBook3Fill className="mr-3 text-xl" />
           <span className="font-medium">Contact Us</span>
         </NavLink>
+        <button
+          onClick={handleLogout}
+          className="text-lg text-rose-500 font-medium flex items-center gap-2 hover:bg-rose-300 duration-300 transition-all rounded-xl px-3 py-1 w-full"
+        >
+          <LogOut /> Log Out
+        </button>
       </div>
     </div>
   );

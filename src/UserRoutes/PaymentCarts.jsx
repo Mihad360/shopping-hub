@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
 import { useGetCartQuery } from "../redux/baseapi/baseApi";
 import Loading from "../components/Loading";
+import useAuth from "../hooks/useAuth";
 
 const PaymentCarts = () => {
-  const { email } = useSelector((state) => state.userSlice.user);
-  const { data: carts = [] , isLoading} = useGetCartQuery(email);
+  const {user} = useAuth()
+  const { data: carts = [] , isLoading} = useGetCartQuery(user?.email);
 
   const totalPrice = carts.reduce((total, item) => total + item.price, 0);
 
@@ -16,11 +16,11 @@ const PaymentCarts = () => {
     <div className="px-4 py-8">
       <div className="bg-green-500 text-white p-4 rounded-lg mb-6">
         <h2 className="text-2xl font-bold">
-          Total Price: {totalPrice.toFixed(2)} TK
+          Total Price: {totalPrice?.toFixed(2)} TK
         </h2>
       </div>
 
-      {carts.length > 0 ? (
+      {carts?.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="w-full bg-white border rounded-lg shadow-md">
             <thead className="bg-gray-200">
@@ -40,7 +40,7 @@ const PaymentCarts = () => {
               </tr>
             </thead>
             <tbody>
-              {carts.map((item, index) => (
+              {carts?.map((item, index) => (
                 <tr key={item._id} className="hover:bg-gray-100">
                   <td className="px-6 py-4 border-b text-sm">{index + 1}</td>
                   <td className="px-6 py-4 border-b">

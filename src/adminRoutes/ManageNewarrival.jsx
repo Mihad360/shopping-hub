@@ -23,7 +23,9 @@ const ManageNewarrival = () => {
 
   if (isLoading) {
     return (
-      <Loading></Loading>
+      <div className="mx-auto w-32 py-72">
+        <Loading></Loading>
+      </div>
     );
   }
 
